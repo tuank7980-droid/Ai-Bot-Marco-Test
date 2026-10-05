@@ -1,0 +1,308 @@
+{
+  "schema": "agent-lab-reference-map-v1",
+  "title": "Spooksville",
+  "image": "/assets/spooksville-map.png",
+  "image_size": [
+    1299,
+    1292
+  ],
+  "source_note": "Source map coordinates are normalized from the bottom-left origin to image pixels (top-left origin); the player position follows the supplied in-game map crop.",
+  "categories": [
+    {
+      "id": "shop",
+      "label": "Shops",
+      "icon": "/assets/marker-shop.png",
+      "count": 2
+    },
+    {
+      "id": "enemy",
+      "label": "Enemies",
+      "icon": "/assets/marker-enemy.png",
+      "count": 32
+    },
+    {
+      "id": "safezone",
+      "label": "Safe Zone",
+      "icon": "/assets/marker-respawn-tight.png",
+      "count": 1
+    },
+    {
+      "id": "logpose",
+      "label": "Log Pose",
+      "icon": "/assets/marker-logpose.png",
+      "count": 1
+    },
+    {
+      "id": "player",
+      "label": "Player Location",
+      "icon": "/assets/marker-player-location.png",
+      "count": 1
+    }
+  ],
+  "markers": [
+    {
+      "id": "enemy-01",
+      "category": "enemy",
+      "x": 848,
+      "y": 919,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-02",
+      "category": "enemy",
+      "x": 788,
+      "y": 419,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-03",
+      "category": "enemy",
+      "x": 978,
+      "y": 557,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-04",
+      "category": "enemy",
+      "x": 639,
+      "y": 240,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-05",
+      "category": "enemy",
+      "x": 523,
+      "y": 320,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-06",
+      "category": "enemy",
+      "x": 445,
+      "y": 235,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-07",
+      "category": "enemy",
+      "x": 307,
+      "y": 303,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-08",
+      "category": "enemy",
+      "x": 382,
+      "y": 428,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-09",
+      "category": "enemy",
+      "x": 390,
+      "y": 696,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-10",
+      "category": "enemy",
+      "x": 644,
+      "y": 885,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-11",
+      "category": "enemy",
+      "x": 908,
+      "y": 808,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-12",
+      "category": "enemy",
+      "x": 856,
+      "y": 554,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-13",
+      "category": "enemy",
+      "x": 792,
+      "y": 702,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-14",
+      "category": "enemy",
+      "x": 499,
+      "y": 705,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-15",
+      "category": "enemy",
+      "x": 501,
+      "y": 420,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-16",
+      "category": "enemy",
+      "x": 906,
+      "y": 688,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-17",
+      "category": "enemy",
+      "x": 786,
+      "y": 812,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-18",
+      "category": "enemy",
+      "x": 505,
+      "y": 814,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-19",
+      "category": "enemy",
+      "x": 396,
+      "y": 808,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-20",
+      "category": "enemy",
+      "x": 463,
+      "y": 924,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-21",
+      "category": "enemy",
+      "x": 263,
+      "y": 822,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-22",
+      "category": "enemy",
+      "x": 976,
+      "y": 312,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-23",
+      "category": "enemy",
+      "x": 893,
+      "y": 228,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-24",
+      "category": "enemy",
+      "x": 1012,
+      "y": 783,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-25",
+      "category": "enemy",
+      "x": 646,
+      "y": 757,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-26",
+      "category": "enemy",
+      "x": 442,
+      "y": 552,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-27",
+      "category": "enemy",
+      "x": 342,
+      "y": 558,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-28",
+      "category": "enemy",
+      "x": 642,
+      "y": 339,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-29",
+      "category": "enemy",
+      "x": 401,
+      "y": 322,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-30",
+      "category": "enemy",
+      "x": 889,
+      "y": 429,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-31",
+      "category": "enemy",
+      "x": 776,
+      "y": 321,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "enemy-32",
+      "category": "enemy",
+      "x": 879,
+      "y": 326,
+      "name": "Wandering Soul / Candy Skeleton"
+    },
+    {
+      "id": "shop-1",
+      "category": "shop",
+      "name": "Witch of Halloween",
+      "icon": "/assets/marker-shop-center.png",
+      "x": 644.5,
+      "y": 545
+    },
+    {
+      "id": "shop-2",
+      "category": "shop",
+      "name": "Nyx",
+      "icon": "/assets/marker-shop-outside.png",
+      "x": 714,
+      "y": 750.5
+    },
+    {
+      "id": "safezone-1",
+      "category": "safezone",
+      "x": 580.5346673541554,
+      "y": 888.5955813330747,
+      "name": "Safe Zone",
+      "icon": "/assets/marker-respawn-tight.png"
+    },
+    {
+      "id": "logpose-1",
+      "category": "logpose",
+      "x": 573.75,
+      "y": 888.5,
+      "name": "Log Pose",
+      "icon": "/assets/marker-logpose.png"
+    },
+    {
+      "id": "player-1",
+      "category": "player",
+      "x": 644,
+      "y": 935,
+      "name": "Player Location",
+      "icon": "/assets/marker-player-location.png"
+    }
+  ]
+}

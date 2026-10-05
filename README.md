@@ -1,11 +1,19 @@
-<div align="center">
+# Agent Lab — Bản đồ Spooksville
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+Ứng dụng chạy cục bộ trong trình duyệt. Bản đồ có bộ lọc, zoom, ghim thử và mô phỏng di chuyển.
 
-  <h1>Built with AI Studio</h2>
+## Chạy ứng dụng
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+Yêu cầu Python 3.10 trở lên; không cần cài thư viện ngoài. Từ thư mục dự án, chạy:
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+```powershell
+python run_app.py
+```
 
-</div>
+Mở `http://127.0.0.1:8765/`.
+
+## Bản đồ
+
+Tọa độ marker được ước lượng từ ảnh bản đồ đã cung cấp. Hai shop là **Witch of Halloween** và **Nyx**; marker hồi sinh là **Spawn Point**. Rê chuột lên biểu tượng để xem tên. Đây là lớp tham khảo tĩnh, không đọc vị trí nhân vật trong game.
+
+Ảnh marker hồi sinh đã cắt lề trong suốt để dễ nhìn. Bản đồ giữ nguyên tỉ lệ gốc; kích thước marker ổn định khi zoom.

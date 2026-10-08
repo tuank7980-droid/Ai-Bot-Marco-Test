@@ -1,7 +1,7 @@
 {
   "schema": "agent-lab-reference-map-v1",
   "title": "Spooksville",
-  "image": "/assets/spooksville-map.png",
+  "image": "assets/spooksville-map.png",
   "image_size": [
     1299,
     1292
@@ -11,31 +11,31 @@
     {
       "id": "shop",
       "label": "Shops",
-      "icon": "/assets/marker-shop.png",
+      "icon": "assets/marker-shop.png",
       "count": 2
     },
     {
       "id": "enemy",
       "label": "Enemies",
-      "icon": "/assets/marker-enemy.png",
+      "icon": "assets/marker-enemy.png",
       "count": 32
     },
     {
       "id": "safezone",
       "label": "Safe Zone",
-      "icon": "/assets/marker-respawn-tight.png",
+      "icon": "assets/marker-respawn-tight.png",
       "count": 1
     },
     {
       "id": "logpose",
       "label": "Log Pose",
-      "icon": "/assets/marker-logpose.png",
+      "icon": "assets/marker-logpose.png",
       "count": 1
     },
     {
       "id": "player",
       "label": "Player Location",
-      "icon": "/assets/marker-player-location.png",
+      "icon": "assets/marker-player-location.png",
       "count": 1
     }
   ],
@@ -268,7 +268,7 @@
       "id": "shop-1",
       "category": "shop",
       "name": "Witch of Halloween",
-      "icon": "/assets/marker-shop-center.png",
+      "icon": "assets/marker-shop-center.png",
       "x": 644.5,
       "y": 545
     },
@@ -276,7 +276,7 @@
       "id": "shop-2",
       "category": "shop",
       "name": "Nyx",
-      "icon": "/assets/marker-shop-outside.png",
+      "icon": "assets/marker-shop-outside.png",
       "x": 714,
       "y": 750.5
     },
@@ -286,7 +286,7 @@
       "x": 580.5346673541554,
       "y": 888.5955813330747,
       "name": "Safe Zone",
-      "icon": "/assets/marker-respawn-tight.png"
+      "icon": "assets/marker-respawn-tight.png"
     },
     {
       "id": "logpose-1",
@@ -294,15 +294,15 @@
       "x": 573.75,
       "y": 888.5,
       "name": "Log Pose",
-      "icon": "/assets/marker-logpose.png"
+      "icon": "assets/marker-logpose.png"
     },
     {
       "id": "player-1",
       "category": "player",
-      "x": 644,
-      "y": 935,
+      "x": 646,
+      "y": 909,
       "name": "Player Location",
-      "icon": "/assets/marker-player-location.png"
+      "icon": "assets/marker-player-location.png"
     }
   ]
 }

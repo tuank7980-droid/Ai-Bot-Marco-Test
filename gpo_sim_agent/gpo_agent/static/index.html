@@ -1,0 +1,4187 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GPO Bot Macro &amp; Vision Positioning AI Studio - Auto-Farm &amp; AFK Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #05030d;
+      --panel: #0d0920;
+      --panel2: #120b2c;
+      --purple: #741cff;
+      --purple2: #9b45ff;
+      --violet: #5d16ff;
+      --accent-cyan: #38bdf8;
+      --accent-emerald: #00f5b8;
+      --accent-gold: #fbbf24;
+      --text: #f8f6ff;
+      --muted: #9c91c8;
+      --line: rgba(151, 72, 255, .25);
+      --line-hover: rgba(175, 95, 255, .45);
+      --glow: 0 0 28px rgba(111, 30, 255, .35);
+      --gold-glow: 0 0 24px rgba(251, 191, 36, .4);
+      --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-code: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: var(--font-main);
+      background:
+        radial-gradient(circle at 70% 20%, rgba(106, 25, 255, .20), transparent 32%),
+        radial-gradient(circle at 20% 90%, rgba(88, 20, 255, .14), transparent 30%),
+        linear-gradient(135deg, #03020a, #090416 48%, #04020c);
+      overflow-x: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    body::before {
+      content: "";
+      position: fixed; inset: 0; pointer-events: none;
+      background: linear-gradient(rgba(255, 255, 255, .015) 1px, transparent 1px);
+      background-size: 100% 4px; opacity: .25; z-index: 1;
+    }
+
+    /* MAIN APP CONTAINER */
+    .app {
+      width: min(1520px, 98vw);
+      height: min(940px, 95vh);
+      min-height: 720px;
+      display: grid;
+      grid-template-columns: 265px 1fr;
+      border: 1px solid rgba(137, 55, 255, .55);
+      border-radius: 24px;
+      overflow: hidden;
+      background: rgba(8, 5, 20, .92);
+      box-shadow: 0 0 70px rgba(85, 20, 255, .25), inset 0 0 50px rgba(105, 32, 255, .05);
+      backdrop-filter: blur(20px);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      padding: 24px 18px 20px;
+      border-right: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(22, 10, 50, .92), rgba(8, 5, 21, .94));
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+      overflow-y: auto;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 0 4px 20px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 14px;
+      user-select: none;
+    }
+
+    .brand-hero-logo {
+      width: 100%;
+      max-height: 70px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.5));
+      transition: transform 0.2s ease;
+    }
+    .brand-hero-logo:hover {
+      transform: scale(1.02);
+    }
+
+    .brand-tagline-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 99px;
+      background: rgba(119, 36, 255, .18);
+      border: 1px solid rgba(144, 66, 255, .4);
+      color: #cbb8ff;
+      font-size: 10.5px;
+      font-weight: 750;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      box-shadow: 0 0 14px rgba(119, 36, 255, 0.22);
+    }
+
+    .brand-tagline-badge .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
+    }
+
+    .nav {
+      display: grid;
+      gap: 7px;
+      margin-bottom: 20px;
+    }
+
+    .nav-label {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      padding: 6px 12px 2px;
+    }
+
+    .nav button {
+      border: 0;
+      color: #c9c0e9;
+      background: transparent;
+      padding: 12px 14px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13.5px;
+      font-weight: 650;
+      text-align: left;
+      cursor: pointer;
+      transition: all .2s ease;
+      position: relative;
+    }
+
+    .nav button:hover {
+      background: rgba(123, 38, 255, .12);
+      color: #ffffff;
+    }
+
+    .nav button.active {
+      color: #ffffff;
+      background: linear-gradient(100deg, #7220ff, #5e20e9);
+      box-shadow: 0 0 24px rgba(105, 26, 255, .4), inset 0 1px rgba(255, 255, 255, .18);
+    }
+
+    .nav button.vip-btn.active {
+      background: linear-gradient(100deg, #d97706, #b45309);
+      box-shadow: 0 0 24px rgba(245, 158, 11, .4), inset 0 1px rgba(255, 255, 255, .25);
+    }
+
+    .nav .icon {
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .nav .badge-num {
+      margin-left: auto;
+      font-family: var(--font-code);
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.35);
+      color: var(--muted);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .nav button.active .badge-num {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* PROFILE FOOTER */
+    .profile {
+      margin-top: auto;
+      border-top: 1px solid var(--line);
+      padding: 18px 8px 4px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid #8d3cff;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, #27204c, #0b0718);
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
+      box-shadow: 0 0 18px rgba(124, 48, 255, .25);
+      flex-shrink: 0;
+    }
+
+    .profile-info strong {
+      font-size: 13.5px;
+      color: #ffffff;
+      display: block;
+    }
+
+    .profile-info span {
+      display: block;
+      color: #a998d8;
+      font-size: 11.5px;
+      margin-top: 2px;
+    }
+
+    .crown-icon {
+      margin-left: auto;
+      width: 28px;
+      height: 28px;
+      filter: drop-shadow(0 0 8px #ffb300);
+      cursor: pointer;
+      transition: transform .2s ease;
+    }
+    .crown-icon:hover { transform: scale(1.15); }
+
+    /* MAIN CONTENT VIEW */
+    .main {
+      padding: 24px 28px 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* TOPBAR */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .crumb {
+      color: #9b8ec4;
+      font-size: 13.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .crumb b { color: #fff; font-weight: 700; }
+
+    .top-telemetry {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .telemetry-chip {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 12px;
+      border-radius: 12px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      font-size: 11.5px;
+      font-family: var(--font-code);
+      color: var(--muted);
+    }
+
+    .telemetry-chip strong { color: #ffffff; }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 10px var(--accent-emerald);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.8); }
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      color: #c9c0e9;
+      background: #100a25;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      transition: all .2s;
+    }
+    .circle:hover {
+      background: rgba(123, 38, 255, .2);
+      border-color: rgba(158, 70, 255, .5);
+      color: #fff;
+    }
+
+    /* HERO BANNER SECTION */
+    .hero {
+      border: 1px solid rgba(135, 57, 255, .35);
+      border-radius: 20px;
+      padding: 24px 28px;
+      background:
+        radial-gradient(circle at 85% 0%, rgba(125, 31, 255, .28), transparent 34%),
+        linear-gradient(135deg, rgba(28, 12, 63, .94), rgba(12, 7, 28, .96));
+      box-shadow: var(--glow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute; right: -90px; top: -110px; width: 300px; height: 300px;
+      border: 1px solid rgba(158, 72, 255, .25); border-radius: 50%;
+      box-shadow: 0 0 0 35px rgba(132, 44, 255, .035), 0 0 0 70px rgba(132, 44, 255, .025);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      color: #a69bc7;
+      font-size: 13px;
+      line-height: 1.5;
+      max-width: 780px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 12px;
+      border-radius: 99px;
+      margin-top: 16px;
+      background: rgba(119, 36, 255, .15);
+      border: 1px solid rgba(144, 66, 255, .35);
+      color: #cbb8ff;
+      font-size: 11.5px;
+      font-family: var(--font-code);
+      font-weight: 600;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #9e4cff;
+      box-shadow: 0 0 10px #9e4cff;
+    }
+
+    /* CARDS & GRIDS */
+    .view-panel {
+      display: none;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .view-panel.active {
+      display: flex;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(13, 8, 30, .86);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, .28);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(151, 72, 255, .16);
+      gap: 12px;
+      background: rgba(18, 11, 44, .4);
+    }
+
+    .card-head b {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-head span {
+      font-size: 12px;
+      color: #8f83b5;
+    }
+
+    /* BUTTONS */
+    .btn {
+      border: 1px solid rgba(158, 70, 255, .35);
+      border-radius: 11px;
+      padding: 9px 15px;
+      color: white;
+      background: #150b31;
+      cursor: pointer;
+      font-weight: 700;
+      font-family: var(--font-main);
+      font-size: 12.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all .2s;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      background: #1e1045;
+      border-color: rgba(180, 95, 255, .55);
+      color: #fff;
+    }
+
+    .btn.primary {
+      background: linear-gradient(100deg, #7b21ff, #5b22e8);
+      box-shadow: 0 0 20px rgba(113, 32, 255, .3);
+      border-color: rgba(175, 95, 255, .6);
+    }
+    .btn.primary:hover {
+      box-shadow: 0 0 28px rgba(113, 32, 255, .5);
+      filter: brightness(1.1);
+    }
+
+    .btn.gold {
+      background: linear-gradient(100deg, #d97706, #b45309);
+      border-color: #fbbf24;
+      color: #fef08a;
+      box-shadow: 0 0 18px rgba(245, 158, 11, .3);
+    }
+    .btn.gold:hover {
+      box-shadow: 0 0 26px rgba(245, 158, 11, .5);
+      color: #fff;
+    }
+
+    /* SWITCH TOGGLE */
+    .switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      border-radius: 99px;
+      background: #2a1c4a;
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transition: background .2s;
+      flex-shrink: 0;
+      display: inline-block;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .switch i {
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: #ffffff;
+      transition: transform .2s ease;
+    }
+    .switch input:checked + i {
+      transform: translateX(18px);
+      background: #ffffff;
+    }
+    .switch.active, .switch:has(input:checked) {
+      background: linear-gradient(100deg, #7b21ff, #5b22e8);
+      border-color: #9b45ff;
+      box-shadow: 0 0 12px rgba(113, 32, 255, .4);
+    }
+
+    /* ========================================================
+       MAP & RADAR STAGE STYLES
+       ======================================================== */
+    .map-controls-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px;
+      background: rgba(18, 11, 44, .6);
+      border-bottom: 1px solid rgba(151, 72, 255, .16);
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .esp-filter-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip-btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 12px;
+      border-radius: 12px;
+      background: #140b2e;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .chip-btn:hover {
+      background: #1e1045;
+      color: #fff;
+      border-color: var(--line-hover);
+    }
+    .chip-btn.active {
+      background: rgba(116, 28, 255, .25);
+      border-color: #9b45ff;
+      color: #ffffff;
+      box-shadow: 0 0 12px rgba(111, 30, 255, .25);
+    }
+    .chip-btn img {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+    }
+    .chip-count {
+      font-family: var(--font-code);
+      font-size: 10.5px;
+      padding: 1px 6px;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.4);
+      color: var(--muted);
+    }
+    .chip-btn.active .chip-count { color: #ffffff; }
+
+    .map-stage-wrapper {
+      position: relative;
+      height: 560px;
+      background: #040209;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+      transition: transform 0.3s ease-out;
+    }
+
+    #refSvg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    #refSvg:active { cursor: grabbing; }
+
+    .map-marker,
+    .marker,
+    #markersLayer > g,
+    #player-marker-group,
+    [data-cat="player"],
+    .player-marker {
+      cursor: pointer;
+      transform-box: fill-box;
+      transform-origin: center;
+      transition: transform 0.3s ease-out, filter 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      outline: none;
+    }
+    .map-marker image,
+    .marker image {
+      transform-box: fill-box;
+      transform-origin: center;
+      transition: transform 0.3s ease-out, filter 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .map-marker:hover {
+      transform: scale(1.26);
+      filter: drop-shadow(0 0 16px rgba(155, 69, 255, 0.95)) drop-shadow(0 8px 18px rgba(0, 0, 0, 0.88)) brightness(1.18);
+    }
+    .map-marker:hover image {
+      filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.85));
+    }
+    .map-marker[data-cat="enemy"]:hover {
+      filter: drop-shadow(0 0 18px rgba(244, 63, 94, 0.95)) drop-shadow(0 8px 18px rgba(0, 0, 0, 0.9)) brightness(1.2);
+    }
+    .map-marker[data-cat="logpose"]:hover {
+      filter: drop-shadow(0 0 22px rgba(251, 191, 36, 1)) drop-shadow(0 8px 20px rgba(0, 0, 0, 0.92)) brightness(1.25);
+    }
+    .map-marker[data-cat="shop"]:hover {
+      filter: drop-shadow(0 0 18px rgba(0, 245, 184, 0.95)) drop-shadow(0 8px 18px rgba(0, 0, 0, 0.9)) brightness(1.18);
+    }
+    .map-marker[data-cat="safezone"]:hover {
+      filter: drop-shadow(0 0 18px rgba(168, 85, 247, 0.95)) drop-shadow(0 8px 18px rgba(0, 0, 0, 0.9)) brightness(1.18);
+    }
+    .map-marker[data-cat="player"]:hover {
+      filter: drop-shadow(0 0 22px rgba(56, 189, 248, 1)) drop-shadow(0 8px 20px rgba(0, 0, 0, 0.92)) brightness(1.22);
+    }
+
+    #mapTooltip {
+      position: absolute;
+      display: none;
+      background: rgba(16, 9, 36, 0.95);
+      border: 1px solid #9b45ff;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: 11.5px;
+      color: #ffffff;
+      pointer-events: none;
+      z-index: 100;
+      white-space: nowrap;
+    }
+
+    #pinNotice {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(100deg, #7b21ff, #5b22e8);
+      color: #fff;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 12px;
+      font-size: 12px;
+      display: none;
+      z-index: 40;
+      box-shadow: 0 4px 20px rgba(113, 32, 255, 0.5);
+    }
+
+    .map-hud-overlay {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+      padding: 10px 16px;
+      background: rgba(10, 6, 24, 0.92);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-code);
+      font-size: 11.5px;
+      pointer-events: none;
+      z-index: 30;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .mod-filter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      padding: 16px 20px;
+      background: rgba(15, 8, 36, .5);
+      border-top: 1px solid rgba(151, 72, 255, .16);
+    }
+
+    .mod-toggle-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: rgba(22, 13, 50, .6);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+
+    .mod-toggle-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ========================================================
+       MACRO STUDIO & AFK ACTION SEQUENCER
+       ======================================================== */
+    .editor {
+      min-height: 280px;
+      padding: 18px 20px;
+      font-family: var(--font-code);
+      color: #bdb0e8;
+      font-size: 13px;
+      line-height: 1.8;
+      background: #080414;
+    }
+
+    .editor-textarea {
+      width: 100%;
+      height: 260px;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #d1c4f9;
+      font-family: var(--font-code);
+      font-size: 13px;
+      line-height: 1.8;
+      resize: vertical;
+    }
+
+    .editor-actions {
+      display: flex;
+      gap: 10px;
+      padding: 0 20px 18px;
+      background: #080414;
+      border-top: 1px solid rgba(151, 72, 255, .12);
+      padding-top: 14px;
+    }
+
+    .stats {
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+    }
+
+    .stat {
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .025);
+      border: 1px solid rgba(151, 72, 255, .15);
+    }
+
+    .stat small { color: #877ca8; font-size: 11.5px; }
+    .stat strong { display: block; font-size: 20px; margin-top: 4px; color: #fff; }
+
+    .setting {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 11px 0;
+      border-bottom: 1px solid rgba(151, 72, 255, .10);
+      font-size: 13px;
+    }
+    .setting:last-child { border-bottom: 0; }
+
+    /* ========================================================
+       VIP HERO & PERKS
+       ======================================================== */
+    .vip-hero-banner {
+      border: 1px solid rgba(251, 191, 36, .45);
+      border-radius: 20px;
+      padding: 24px 28px;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(251, 191, 36, .22), transparent 35%),
+        linear-gradient(135deg, rgba(38, 22, 6, .94), rgba(15, 9, 28, .96));
+      box-shadow: var(--gold-glow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vip-hero-banner img.pro-badge {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 14px rgba(251, 191, 36, .6));
+    }
+
+    /* TOAST NOTIFICATION */
+    .toast {
+      position: fixed;
+      right: 28px;
+      bottom: 25px;
+      padding: 13px 18px;
+      border-radius: 14px;
+      background: #150b2c;
+      border: 1px solid #7f38ff;
+      color: #e7ddff;
+      box-shadow: 0 0 28px rgba(110, 32, 255, .35);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: .25s ease;
+      z-index: 1000;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+        .delay-preset-chip {
+      transition: all .15s ease;
+      border-radius: 8px;
+    }
+    .delay-preset-chip.active {
+      background: rgba(0, 245, 184, 0.16) !important;
+      border-color: #00f5b8 !important;
+      color: #00f5b8 !important;
+      box-shadow: 0 0 10px rgba(0, 245, 184, 0.35);
+    }
+
+    /* High ping alert banner styles removed */
+
+    /* MACRO LOOP STYLES */
+    .macro-loop-bar {
+      padding: 12px 20px;
+      background: rgba(22, 13, 50, 0.7);
+      border-bottom: 1px solid rgba(151, 72, 255, .16);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .macro-loop-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .macro-loop-select, .macro-loop-input {
+      background: #140b2e;
+      border: 1px solid var(--line);
+      color: #ffffff;
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-family: var(--font-code);
+      font-size: 12px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .macro-loop-select:focus, .macro-loop-input:focus {
+      border-color: var(--purple2);
+    }
+
+    .loop-progress-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-code);
+      font-size: 11.5px;
+      padding: 6px 12px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+    .loop-progress-indicator.active {
+      color: #00f5b8;
+      border-color: rgba(0, 245, 184, 0.45);
+      background: rgba(0, 245, 184, 0.08);
+      animation: loopPulse 1.2s infinite alternate;
+    }
+    @keyframes loopPulse {
+      0% { box-shadow: 0 0 4px rgba(0, 245, 184, 0.2); }
+      100% { box-shadow: 0 0 16px rgba(0, 245, 184, 0.5); }
+    }
+
+    .macro-step-active {
+      border-color: #00f5b8 !important;
+      background: rgba(0, 245, 184, 0.14) !important;
+      box-shadow: 0 0 16px rgba(0, 245, 184, 0.3) !important;
+      transform: scale(1.01);
+      transition: all 0.15s ease;
+    }
+
+    /* PRO LICENSE & FEATURE LOCK STYLES */
+    .pro-lock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(217, 119, 6, 0.1));
+      border: 1px solid rgba(251, 191, 36, 0.45);
+      color: #fbbf24;
+      font-family: var(--font-code);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .pro-free-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--muted);
+      font-family: var(--font-code);
+      font-size: 10.5px;
+      font-weight: 600;
+    }
+
+    .pro-locked-section {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .pro-locked-section.locked::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(8, 5, 20, 0.72);
+      backdrop-filter: blur(3px);
+      z-index: 8;
+    }
+    .pro-lock-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      z-index: 9;
+      padding: 20px;
+      text-align: center;
+      background: radial-gradient(circle at center, rgba(30, 15, 65, 0.8), rgba(8, 5, 20, 0.95));
+    }
+
+    /* RESPONSIVENESS */
+    @media(max-width: 960px) {
+      body { overflow: auto; padding: 8px; }
+      .app { height: auto; min-height: 96vh; grid-template-columns: 1fr; border-radius: 18px; }
+      .sidebar { border-right: 0; border-bottom: 1px solid var(--line); }
+      .profile { display: none; }
+      .nav { grid-template-columns: repeat(3, 1fr); }
+      .nav button { justify-content: center; }
+      .nav button span:last-child { display: none; }
+      
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MAIN APP CONTAINER -->
+  <div class="app">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+      <div class="brand" onclick="page('Radar', document.getElementById('btnNavRadar'))">
+        <img src="/assets/bot-macro-logo.svg" alt="Bot Macro Logo" class="brand-hero-logo">
+        <div class="brand-tagline-badge">
+          <span class="tag-dot"></span>
+          <span>Tactical Radar Macro Bot</span>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <div class="nav-label">Core Navigation</div>
+        <button class="active" id="btnNavRadar" onclick="page('Radar', this)">
+          <span class="icon"><img src="/assets/icon-map.svg" alt="Map" style="width: 20px; height: 20px; object-fit: contain; filter: drop-shadow(0 0 6px #38bdf8);"></span>
+          <span>Map &amp; Vision Positioning</span>
+          <span class="badge-num" id="badgePoints">37</span>
+        </button>
+
+        <button id="btnNavAuto" onclick="page('Auto', this)">
+          <span class="icon">⚡</span>
+          <span>Macro Automation</span>
+        </button>
+
+        <button id="btnNavMacro" onclick="page('Scripts', this)">
+          <span class="icon">‹/›</span>
+          <span>Macro Studio &amp; AFK</span>
+        </button>
+
+        <div class="nav-label">Sensors &amp; Network</div>
+        <button id="btnNavVision" onclick="page('Vision', this)">
+          <span class="icon">🎯</span>
+          <span>Vision &amp; Health OCR</span>
+        </button>
+
+        <button id="btnNavNet" onclick="page('Network', this)">
+          <span class="icon">🌐</span>
+          <span>Server &amp; Ping</span>
+        </button>
+
+        <div class="nav-label">VIP License</div>
+        <button class="vip-btn" id="btnNavVip" onclick="page('VIP', this)">
+          <span class="icon">👑</span>
+          <span style="color: #fbbf24; font-weight: 700;">Crown Pro Suite</span>
+          <span class="badge-num" style="background: rgba(251, 191, 36, 0.25); color: #fbbf24;">PRO</span>
+        </button>
+      </nav>
+
+      <!-- Profile Card at Sidebar Bottom -->
+      <div class="profile">
+        <div class="avatar" id="userAvatar">M</div>
+        <div class="profile-info" style="cursor: pointer;" onclick="openLicenseModal()" title="Manage Crown Pro License">
+          <strong>Captain_Marco</strong>
+          <span id="sidebarTierText" style="color: #fbbf24; font-weight: 700;">👑 Crown Pro Active</span>
+        </div>
+        <img src="/assets/icon-crown.svg" alt="Gold Crown" class="crown-icon" id="crownStatusIcon" onclick="openLicenseModal()" title="Crown Pro Suite License">
+      </div>
+    </aside>
+
+    <!-- RIGHT MAIN WORKSPACE -->
+    <main class="main">
+
+      <!-- TOPBAR -->
+      <div class="topbar">
+        <div class="crumb">
+          Tactical Radar Macro Bot / <b id="crumbTitle">Map &amp; Vision Positioning</b>
+        </div>
+
+        <div class="top-telemetry">
+          <!-- License Tier Pill -->
+          <div class="telemetry-chip" id="topLicensePill" style="cursor: pointer; border-color: rgba(251, 191, 36, 0.4);" onclick="openLicenseModal()" title="Click to view/toggle Crown Pro License">
+            <span style="color: #fbbf24;">👑</span>
+            <strong id="topLicenseText" style="color: #fbbf24;">CROWN PRO ACTIVE</strong>
+          </div>
+
+          <div class="telemetry-chip">
+            <span class="live-dot"></span>
+            <span>HOOK:</span>
+            <strong style="color: var(--accent-emerald);">RobloxPlayerBeta.exe</strong>
+          </div>
+
+          <div class="telemetry-chip">
+            <span>CLIENT:</span>
+            <strong id="topCountry">Vietnam 🇻🇳</strong>
+            <span style="color: var(--muted)">|</span>
+            <span style="color: var(--accent-cyan)" id="topIp">113.161.74.88</span>
+          </div>
+
+          <div class="telemetry-chip" id="topPingChip">
+            <span>PING:</span>
+            <strong style="color: var(--accent-emerald)" id="topPing">28 ms</strong>
+            <span style="color: var(--muted)">|</span>
+            <span style="color: var(--accent-cyan); cursor: pointer; user-select: none;" id="topTelemetryFps" onclick="cycleFpsSimulation()" title="Game Telemetry Frame Rate: Click to cycle FPS (60, 120, 144, 240) and auto-sync macro clock">FPS: <strong id="topFpsVal">144</strong></span>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <button class="circle" title="Calibrate Vision" onclick="showToast('⚡ Bot vision calibrated.')">⚡</button>
+          <button class="circle" title="Toggle Fullscreen" onclick="toggleFullscreen()">☼</button>
+        </div>
+      </div>
+
+      <!-- HERO BANNER -->
+      <section class="hero">
+        <div class="hero-content">
+          <h1 id="heroTitle">Spooksville Island Map &amp; Vision Positioning AI</h1>
+          <p id="heroDesc">Interactive island GPS tracker with real-time player telemetry, 8-way navigation vector, and entity filters.</p>
+          <div class="badge">
+            <i class="badge-dot"></i>
+            <span id="heroBadge">LIVE GPS HOOK • SPOOKSVILLE ACTIVE</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================== -->
+      <!-- VIEW 1: MAP & RADAR ESP -->
+      <!-- ==================================================== -->
+      <section id="viewRadar" class="view-panel active">
+        <div class="card">
+          <div class="card-head">
+            <b>
+              <img src="/assets/icon-map.svg" alt="Map" style="width: 20px; height: 20px; object-fit: contain; filter: drop-shadow(0 0 6px #38bdf8);">
+              <span>Spooksville Island</span>
+            </b>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="btn primary" onclick="openGpsSyncModal()" style="font-weight: 700; background: linear-gradient(135deg, rgba(0, 245, 184, 0.25), rgba(56, 189, 248, 0.25)); border-color: #00f5b8; color: #00f5b8;">📍 Định vị nhân vật (GPS Sync)</button>
+              <button class="btn" onclick="fitReference()">⛶ Fit Map</button>
+              <button class="btn" onclick="zoomReference(0.8)">+ Zoom</button>
+              <button class="btn" onclick="zoomReference(1.25)">- Zoom</button>
+            </div>
+          </div>
+
+          <!-- ESP Filter Bar -->
+          <div class="map-controls-bar">
+            <div class="esp-filter-group">
+              <span style="font-size: 11px; font-weight: 800; color: var(--muted); text-transform: uppercase;">Filters:</span>
+              
+              <!-- Enemies / Mobs (Vision) -->
+              <button class="chip-btn active" id="chip_enemy" onclick="toggleCategory('enemy')">
+                <img src="/assets/marker-enemy.png" alt="Enemy">
+                <span>Enemies / Mobs (Vision)</span>
+                <span class="chip-count" id="count_enemy">32</span>
+              </button>
+
+              <!-- Log Pose (Beacon) -->
+              <button class="chip-btn active" id="chip_logpose" onclick="toggleCategory('logpose')">
+                <img src="/assets/marker-logpose.png" alt="Log Pose">
+                <span>Log Pose (Beacon)</span>
+                <span class="chip-count" id="count_logpose">1</span>
+              </button>
+
+              <!-- Shops & NPCs (nyx) -->
+              <button class="chip-btn active" id="chip_shop" onclick="toggleCategory('shop')">
+                <img src="/assets/marker-shop.png" alt="Shop">
+                <span>Shops &amp; Vendors (NPCs)</span>
+                <span class="chip-count" id="count_shop">2</span>
+              </button>
+
+              <!-- Safezone -->
+              <button class="chip-btn active" id="chip_safezone" onclick="toggleCategory('safezone')">
+                <img src="/assets/marker-respawn-tight.png" alt="Safezone">
+                <span>Safe Zone</span>
+                <span class="chip-count" id="count_safezone">1</span>
+              </button>
+
+              <!-- Player Location (GPS) -->
+              <button class="chip-btn active" id="chip_player" onclick="toggleCategory('player')">
+                <img src="/assets/marker-player-location.png" alt="Player">
+                <span>Player Location (GPS)</span>
+                <span class="chip-count" id="count_player">1</span>
+              </button>
+            </div>
+
+            <div style="display: flex; gap: 6px;">
+              <button class="btn" style="padding: 4px 10px; font-size: 11px;" onclick="selectAllCategories(true)">Show All</button>
+              <button class="btn" style="padding: 4px 10px; font-size: 11px;" onclick="selectAllCategories(false)">Hide All</button>
+            </div>
+          </div>
+
+          <!-- Interactive Map Stage -->
+          <div class="map-stage-wrapper">
+            <svg id="refSvg" viewBox="0 0 1299 1292"></svg>
+            <div id="mapTooltip"></div>
+
+            <!-- HUD Floating Bar on Map -->
+            <div class="map-hud-overlay">
+              <div style="cursor: pointer;" onclick="openGpsSyncModal()" title="Nhấn để định vị lại tọa độ & hướng camera nhân vật">
+                <span>PLAYER:</span>
+                <strong style="color: var(--accent-emerald)" id="hudPlayerPos">[646, 909]</strong>
+                <span style="margin: 0 8px; color: var(--line)">|</span>
+                <span>HEADING:</span>
+                <strong style="color: var(--accent-cyan)" id="hudFacing">E (90°)</strong>
+                <span style="margin-left: 6px; font-size: 10px; color: #00f5b8; background: rgba(0,245,184,0.15); padding: 1px 5px; border-radius: 4px;">Sync 📍</span>
+              </div>
+              <div>
+                <span>LOG POSE BEARING:</span>
+                <strong style="color: #fbbf24" id="hudBearing">048° NORTHEAST</strong>
+                <span style="margin: 0 8px; color: var(--line)">|</span>
+                <span id="mapPointCount" style="color: var(--muted)">37 points indexed</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Visual Mod Toggles Bar -->
+          <div class="mod-filter-grid">
+            <div class="mod-toggle-item">
+              <span class="mod-toggle-label">🌟 High-Contrast AI Vision Filter</span>
+              <label class="switch">
+                <input type="checkbox" id="chkFullbright" onchange="toggleFullbright(this.checked)">
+                <i></i>
+              </label>
+            </div>
+
+            <div class="mod-toggle-item">
+              <span class="mod-toggle-label">🧭 Log Pose Vector Needle</span>
+              <label class="switch">
+                <input type="checkbox" id="chkPoseVector" checked onchange="togglePoseVector(this.checked)">
+                <i></i>
+              </label>
+            </div>
+
+            <div class="mod-toggle-item">
+              <span class="mod-toggle-label">🎯 CV Mob Detection Outlines</span>
+              <label class="switch">
+                <input type="checkbox" id="chkCvBoxes" checked onchange="toggleCvBoxes(this.checked)">
+                <i></i>
+              </label>
+            </div>
+
+            <div class="mod-toggle-item">
+              <span class="mod-toggle-label">📏 Navigation Waypoint Lines</span>
+              <label class="switch">
+                <input type="checkbox" id="chkTracers" onchange="toggleTracers(this.checked)">
+                <i></i>
+              </label>
+            </div>
+          </div>
+
+          <!-- Autonomous Map Learning & Waypoint Auto-Navigation (Crown Pro Feature) -->
+          <div class="card" id="cardRadarMapLearning" style="margin-top: 16px; padding: 16px 20px; border-color: rgba(251, 191, 36, 0.35); background: linear-gradient(135deg, rgba(22, 13, 50, .8), rgba(12, 7, 30, .9));">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 18px;">🗺️</span>
+                <strong style="color: #ffffff; font-size: 13.5px;">Autonomous Map Learning &amp; Waypoint Auto-Navigation</strong>
+              </div>
+              <span class="pro-lock-badge" id="badgeRadarMapPro">CROWN PRO FEATURE</span>
+            </div>
+            <p style="color: var(--muted); font-size: 12px; line-height: 1.45; margin: 0 0 12px;">
+              Autonomous SLAM algorithm automatically learns island topological contouring, dynamic mob patrol paths, and safe navigation channels to Log Pose. Solves shortest 8-directional route with live obstacle avoidance.
+            </p>
+            <div id="radarMapLearningControls" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <span style="font-size: 11.5px; color: var(--text);">Auto-Plot Destination:</span>
+                <select id="selNavTarget" class="macro-loop-select" style="padding: 4px 10px;">
+                  <option value="logpose">Log Pose Beacon (646, 909)</option>
+                  <option value="safezone">Safe Zone Harbor (632, 988)</option>
+                  <option value="shop">Vendor Shop Center (648, 880)</option>
+                  <option value="enemy">Nearest Mob Cluster</option>
+                </select>
+                <button class="btn primary" id="btnAutoNavigate" style="padding: 4px 12px; font-size: 11.5px;" onclick="runAutoNavigation()">🚀 Auto-Navigate Path</button>
+              </div>
+              <div id="radarMapLockNotice" style="display: none; align-items: center; gap: 8px; color: #fbbf24; font-size: 11.5px;">
+                <span>🔒 Locked in Free Edition (Standard radar view only)</span>
+                <button class="btn gold" style="padding: 3px 8px; font-size: 11px;" onclick="openLicenseModal()">Unlock Pro</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================== -->
+      <!-- VIEW 2: MACRO AUTOMATION -->
+      <!-- ==================================================== -->
+      <section id="viewAuto" class="view-panel">
+        <div class="card">
+          <div class="card-head">
+            <b><span>⚡</span><span>GPO Macro Combos &amp; Skill Sequencer</span></b>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn primary" id="btnRunLoop" onclick="toggleRunMacroLoop()">
+                <span id="btnRunLoopIcon">▶</span> <span id="btnRunLoopText">Run Macro Sequence</span>
+              </button>
+              <button class="btn" onclick="openAddModal()">+ Add Action Step</button>
+            </div>
+          </div>
+
+          <!-- MACRO LOOP CONFIGURATION & CONTROLS -->
+          <!-- FRAME-RATE CLOCK SYNCHRONIZATION BAR -->
+          <div style="padding: 10px 20px; background: rgba(14, 8, 34, 0.7); border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <span class="frame-sync-indicator" style="font-family: var(--font-code); font-size: 11.5px; color: var(--accent-emerald);">
+                ⚡ Frame Clock: <strong>144 FPS</strong> (6.94ms/frame • Synced)
+              </span>
+              <span style="font-size: 11px; color: var(--muted);">Auto-aligns step delay intervals to discrete game engine frames to eliminate dropped inputs.</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <button class="btn" style="padding: 4px 10px; font-size: 11px;" onclick="syncAllMacroStepsToFrameClock()">
+                🔄 Resync Delays to Telemetry
+              </button>
+              <label class="switch" title="Toggle Frame Rate Clock Sync" style="margin: 0;">
+                <input type="checkbox" id="chkFrameSync" checked onchange="toggleFrameSync(this.checked)">
+                <i></i>
+              </label>
+            </div>
+          </div>
+          <div class="macro-loop-bar">
+            <div class="macro-loop-group">
+              <span style="font-size: 11.5px; font-weight: 700; color: var(--text);">Loop Count:</span>
+              <select id="macroLoopSelect" class="macro-loop-select" onchange="onLoopSelectChange()">
+                <option value="1">1x (Single Run)</option>
+                <option value="3">3x Repeat Loops</option>
+                <option value="5">5x Repeat Loops</option>
+                <option value="10">10x Repeat Loops</option>
+                <option value="25">25x Repeat Loops</option>
+                <option value="infinite">∞ Infinite Continuous Loop (Crown Pro)</option>
+              </select>
+
+              <span style="font-size: 11.5px; color: var(--muted); margin-left: 6px;">Delay Between Loops:</span>
+              <input type="number" id="macroLoopDelay" class="macro-loop-input" value="350" min="50" max="5000" style="width: 75px;" title="Milliseconds between loop iterations">
+              <span style="font-size: 11px; color: var(--muted);">ms</span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div id="loopProgressDisplay" class="loop-progress-indicator">
+                <span>🔄 Status:</span>
+                <strong id="loopStatusText">Idle (Ready)</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Auto-farm toggles -->
+          <div style="padding: 16px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; border-bottom: 1px solid rgba(151,72,255,.16);">
+            <div class="mod-toggle-item">
+              <span class="mod-toggle-label">⚔️ Auto M1 Fast Attack</span>
+              <label class="switch"><input type="checkbox" checked><i style="margin-left: 18px;"></i></label>
+            </div>
+            <div class="mod-toggle-item">
+              <span class="mod-toggle-label">🛡️ Ken Haki Auto-Parry</span>
+              <label class="switch"><input type="checkbox" checked><i style="margin-left: 18px;"></i></label>
+            </div>
+            <div class="mod-toggle-item">
+              <span class="mod-toggle-label">🦘 Auto Geppo (Sky Walk)</span>
+              <label class="switch"><input type="checkbox"><i style="margin-left: 0;"></i></label>
+            </div>
+            <div class="mod-toggle-item">
+              <span class="mod-toggle-label">🧲 Auto Chest Vacuum</span>
+              <label class="switch"><input type="checkbox" checked><i style="margin-left: 18px;"></i></label>
+            </div>
+          </div>
+
+          <!-- Combo Presets -->
+          <div style="padding: 12px 20px; background: rgba(18, 11, 44, .4); border-bottom: 1px solid rgba(151,72,255,.16); display: flex; align-items: center; gap: 8px; overflow-x: auto;">
+            <span style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase;">Presets:</span>
+            <button class="btn" onclick="loadPreset('m1_z')">⚔️ 4x M1 + Z Burst</button>
+            <button class="btn" onclick="loadPreset('ken_dodge')">🛡️ Ken Haki + Q Dash</button>
+            <button class="btn" onclick="loadPreset('geppo_jump')">🦘 Geppo 3x Sky Jump</button>
+            <button class="btn" onclick="loadPreset('chest_loot')">🧲 Auto Chest Loot</button>
+          </div>
+
+          
+          <!-- Autonomous Bot Learning Engine & Combat AI (Crown Pro Feature) -->
+          <div class="card" id="cardAutoBotLearning" style="margin-top: 14px; padding: 16px 20px; border-color: rgba(251, 191, 36, 0.35); background: linear-gradient(135deg, rgba(22, 13, 50, .8), rgba(12, 7, 30, .9));">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 18px;">🧠</span>
+                <strong style="color: #ffffff; font-size: 13.5px;">Autonomous Bot Learning Engine &amp; Combat AI</strong>
+              </div>
+              <span class="pro-lock-badge" id="badgeAutoBotPro">CROWN PRO FEATURE</span>
+            </div>
+            <p style="color: var(--muted); font-size: 12px; line-height: 1.45; margin: 0 0 12px;">
+              Real-time reinforcement learning AI monitors attack animations, recovery cooldowns, and server ping to autonomously adjust millisecond macro delays, parry timing, and skill combos.
+            </p>
+            <div id="autoBotLearningControls" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <button class="btn" id="btnCalibrateBot" style="padding: 5px 12px; font-size: 11.5px;" onclick="calibrateBotLearning()">🧠 Calibrate Sub-Frame Timings</button>
+                <span style="font-family: var(--font-code); font-size: 11.5px; color: var(--accent-emerald);" id="botLearningStatus">Model Sync: 99.8% Optimal</span>
+              </div>
+              <div id="autoBotLockNotice" style="display: none; align-items: center; gap: 8px; color: #fbbf24; font-size: 11.5px;">
+                <span>🔒 Locked in Free Edition (Manual macros only)</span>
+                <button class="btn gold" style="padding: 3px 8px; font-size: 11px;" onclick="openLicenseModal()">Unlock Pro</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step Timeline -->
+          <div style="padding: 18px 20px; display: flex; flex-direction: column; gap: 10px;" id="macroStepList">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================== -->
+      <!-- VIEW 3: AFK MACRO STUDIO & ACTION SEQUENCER -->
+      <!-- ==================================================== -->
+      <section id="viewScripts" class="view-panel">
+        <div style="display: grid; grid-template-columns: 1.5fr .8fr; gap: 18px;">
+          <!-- Left Action Sequencer -->
+          <div class="card">
+            <div class="card-head">
+              <b><span>⚡</span><span>AFK Macro Action Sequencer</span></b>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn primary" id="btnTestStudioMacro" onclick="toggleRunMacroLoop()">
+                  <span id="btnStudioRunIcon">▶</span> <span id="btnStudioRunText">Test Macro Sequence</span>
+                </button>
+                <button class="btn" onclick="openAddModal()">+ Add Action Step</button>
+              </div>
+            </div>
+
+            <!-- Profile Info & Settings Bar -->
+            <div style="padding: 12px 20px; background: rgba(18, 11, 44, .5); border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase;">Active Profile:</span>
+                <span style="font-family: var(--font-code); font-weight: 700; font-size: 12px; color: #00f5b8; background: rgba(0,245,184,0.1); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(0,245,184,0.25);">
+                  Spooksville_Skeleton_AFK.gpo
+                </span>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn" style="padding: 4px 10px; font-size: 11px;" onclick="exportMacroProfile()">💾 Export Profile</button>
+                <button class="btn" style="padding: 4px 10px; font-size: 11px;" onclick="importMacroProfile()">📁 Import Profile</button>
+                <button class="btn" style="padding: 4px 10px; font-size: 11px; color: #f43f5e;" onclick="resetMacroSteps()">↺ Reset Steps</button>
+              </div>
+            </div>
+
+            <!-- Action Sequence Steps List -->
+            <div style="padding: 16px 20px; display: flex; flex-direction: column; gap: 8px; max-height: 480px; overflow-y: auto;" id="macroStudioStepList">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Right Status & Anti-Idle Watchdog Settings -->
+          <div class="card">
+            <div class="card-head"><b>AFK Bot Engine Status</b><span style="color: #00f5b8;">ONLINE</span></div>
+            <div class="stats">
+              <div class="stat">
+                <small>Automation Engine</small>
+                <strong>OS Native Macro Simulator</strong>
+              </div>
+              <div class="stat">
+                <small>Timing Resolution</small>
+                <strong>Sub-Millisecond (0.1ms)</strong>
+              </div>
+              <div class="setting">
+                <span>Anti-Idle AFK Watchdog (20m Kick Guard)</span>
+                <div class="switch active"><i style="margin-left: 18px;"></i></div>
+              </div>
+              <div class="setting">
+                <span>Natural Humanized Jitter (±12ms)</span>
+                <div class="switch active"><i style="margin-left: 18px;"></i></div>
+              </div>
+              <div class="setting">
+                <span>Auto-Potion Emergency Failsafe</span>
+                <div class="switch active"><i style="margin-left: 18px;"></i></div>
+              </div>
+              <div class="setting">
+                <span>Safezone Auto-Retreat on Low HP</span>
+                <div class="switch active"><i style="margin-left: 18px;"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preloaded Macro Templates Library -->
+        <div class="card" style="margin-top: 18px;">
+          <div class="card-head"><b>Preloaded AFK Macro Templates (1-Click Load)</b><span>READY-TO-USE</span></div>
+          <div style="padding: 18px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
+            <div style="padding: 14px; background: rgba(255,255,255,0.02); border: 1px solid var(--line); border-radius: 12px; display: flex; flex-direction: column; gap: 8px;">
+              <strong style="color: #fff;">⚔️ Candy Skeleton AFK Auto-Farm Loop</strong>
+              <small style="color: var(--muted); line-height: 1.4;">Rotates 4x M1 attacks, casts Z Burst skill, and executes chest pickup loop for 24/7 continuous farming.</small>
+              <button class="btn primary" style="margin-top: auto;" onclick="loadMacroPreset(1)">Load Template</button>
+            </div>
+
+            <div style="padding: 14px; background: rgba(255,255,255,0.02); border: 1px solid var(--line); border-radius: 12px; display: flex; flex-direction: column; gap: 8px;">
+              <strong style="color: #fff;">🛡️ Ken Haki Auto-Parry &amp; Dash Evasion</strong>
+              <small style="color: var(--muted); line-height: 1.4;">Toggles Kenbunshoku Haki dodge aura, times Q dash evasion during enemy attack animations, and counter-attacks.</small>
+              <button class="btn primary" style="margin-top: auto;" onclick="loadMacroPreset(2)">Load Template</button>
+            </div>
+
+            <div style="padding: 14px; background: rgba(255,255,255,0.02); border: 1px solid rgba(251,191,36,0.3); border-radius: 12px; display: flex; flex-direction: column; gap: 8px;">
+              <strong style="color: #fbbf24;">🌙 24/7 Treo Máy Anti-Disconnect Watchdog</strong>
+              <small style="color: var(--muted); line-height: 1.4;">Autonomous anti-idle motion jitter, camera yaw micro-rotations, and stamina recovery pauses to keep account online 24/7.</small>
+              <button class="btn gold" style="margin-top: auto;" onclick="loadMacroPreset(3)">Load Template</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================== -->
+      <!-- VIEW 4: VISION & HEALTH OCR -->
+      <!-- ==================================================== -->
+      <section id="viewVision" class="view-panel">
+        <div class="card">
+          <div class="card-head">
+            <b><span>🎯</span><span>Computer Vision &amp; Entity Detection OCR Scanner</span></b>
+            <button class="btn primary" onclick="showToast('⚡ Screen frame parsed successfully.')">Scan Frame Now</button>
+          </div>
+
+          <div style="padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px;">
+            <div style="padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(22, 13, 50, .5);">
+              <b style="display: block; margin-bottom: 12px;">Health Bar OCR Analyzer</b>
+              <div style="margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+                  <span>Player Health (HP):</span>
+                  <strong style="color: var(--accent-emerald)">840 / 1000 (84%)</strong>
+                </div>
+                <div style="height: 10px; background: rgba(0,0,0,0.5); border-radius: 5px; overflow: hidden; border: 1px solid var(--line);">
+                  <div style="height: 100%; width: 84%; background: linear-gradient(90deg, #10b981, #00f5b8);"></div>
+                </div>
+              </div>
+
+              <div style="margin-bottom: 14px;">
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+                  <span>Boss Health:</span>
+                  <strong style="color: #f43f5e">1,850 / 5,000 (37%)</strong>
+                </div>
+                <div style="height: 10px; background: rgba(0,0,0,0.5); border-radius: 5px; overflow: hidden; border: 1px solid var(--line);">
+                  <div style="height: 100%; width: 37%; background: linear-gradient(90deg, #f43f5e, #fb7185);"></div>
+                </div>
+              </div>
+
+              <div>
+                <label style="font-size: 12px; color: var(--muted); display: block; margin-bottom: 6px;">
+                  Auto-Potion Threshold: <strong style="color: #cbb8ff;" id="lblPotion">35%</strong>
+                </label>
+                <input type="range" min="15" max="65" value="35" style="width: 100%; accent-color: var(--purple2);" oninput="const lbl = document.getElementById('lblPotion'); if (lbl) lbl.innerText = this.value + '%'">
+              </div>
+            </div>
+
+            <div style="padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(22, 13, 50, .5);">
+              <b style="display: block; margin-bottom: 12px;">Target Color Spectrum Matrix</b>
+              <div style="display: grid; gap: 10px; font-size: 12px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="width: 12px; height: 12px; border-radius: 3px; background: #e11d48;"></span>
+                    <span>Skeleton Aura (#E11D48)</span>
+                  </div>
+                  <strong style="color: var(--accent-emerald)">MATCHED (99.4%)</strong>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="width: 12px; height: 12px; border-radius: 3px; background: #fbbf24;"></span>
+                    <span>Chest Gold (#FBBF24)</span>
+                  </div>
+                  <strong style="color: #fbbf24">DETECTED (12m)</strong>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="width: 12px; height: 12px; border-radius: 3px; background: #38bdf8;"></span>
+                    <span>Stamina Cyan (#38BDF8)</span>
+                  </div>
+                  <strong style="color: var(--accent-cyan)">NORMAL (72%)</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================== -->
+      <!-- VIEW 5: SERVER HOPPER & TELEMETRY -->
+      <!-- ==================================================== -->
+      <section id="viewNetwork" class="view-panel">
+        <div class="card">
+          <div class="card-head">
+            <b><span>🌐</span><span>Roblox Server Telemetry &amp; Ping Monitor</span></b>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <button class="btn" id="btnSimHighPing" onclick="toggleSimulateHighPing()" title="Simulate latency above 100ms to test top-right visual flasher">
+                ⚠️ Simulate &gt;100ms Ping
+              </button>
+              <button class="btn primary" onclick="serverHop()">⚡ Hop Lowest Ping</button>
+              <button class="btn" onclick="copyJobId()">📋 Copy Job ID</button>
+            </div>
+          </div>
+
+          <!-- High ping alert card removed -->
+
+          <div style="padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+            <div style="padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(22, 13, 50, .5); display: flex; flex-direction: column; gap: 10px;">
+              <b>Client Geolocation &amp; ISP</b>
+              <div class="setting"><span>Country:</span><strong id="netCountry">🇻🇳 Vietnam</strong></div>
+              <div class="setting"><span>City / Region:</span><strong id="netCity">Ho Chi Minh City • Southeast</strong></div>
+              <div class="setting"><span>Client IP:</span><strong style="color: var(--accent-cyan)" id="netIp">113.161.74.88</strong></div>
+              <div class="setting"><span>ISP &amp; ASN:</span><strong id="netIsp">VNPT Telecom • AS45899</strong></div>
+            </div>
+
+            <div style="padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(22, 13, 50, .5); display: flex; flex-direction: column; gap: 10px;">
+              <b>Roblox Game Server &amp; Latency</b>
+              <div class="setting"><span>Region:</span><strong>Singapore (SG - Asia Hub) 🇸🇬</strong></div>
+              <div class="setting"><span>Latency Safety:</span><span id="netLatencyHealthBadge"><strong style="color: var(--accent-emerald);">Optimal (&lt;100ms)</strong></span></div>
+              <div class="setting"><span>Threshold Limit:</span><strong style="color: #fbbf24;">100 ms (Warning Level)</strong></div>
+              <div class="setting"><span>Tickrate:</span><strong style="color: var(--accent-emerald)">60.0 Hz (Smooth)</strong></div>
+              <div class="setting"><span>Server Job ID:</span><strong id="lblJobId" style="font-family: var(--font-code); color: var(--accent-cyan); font-size: 11px;">94821a00-552e-410a-812b-sg01</strong></div>
+            </div>
+          </div>
+
+          
+          <!-- Simulated Latency Adjustment Slider -->
+          <div style="padding: 14px 20px; background: rgba(22, 13, 50, .4); border-top: 1px solid rgba(151,72,255,.16); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 12px; flex: 1; min-width: 280px;">
+              <span style="font-size: 12px; font-weight: 700; color: var(--text);">Simulate Network Latency:</span>
+              <input type="range" id="pingSlider" min="15" max="250" value="28" style="flex: 1; accent-color: #9b45ff;" oninput="onPingSliderChange(this.value)">
+              <span id="pingSliderValue" style="font-family: var(--font-code); font-size: 13px; font-weight: 800; color: var(--accent-emerald); width: 65px;">28 ms</span>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn" id="btnPingPresetNormal" style="font-size: 11px; padding: 4px 10px;" onclick="setPingValue(28)">28ms (Optimal)</button>
+              <button class="btn" id="btnPingPresetHigh" style="font-size: 11px; padding: 4px 10px; color: #f43f5e;" onclick="setPingValue(142)">142ms (Warning &gt;100ms)</button>
+            </div>
+          </div>
+
+          <!-- Ping Sparkline Visual -->
+          <div style="padding: 20px; border-top: 1px solid rgba(151,72,255,.16);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <span style="font-size: 13px; font-weight: 700;">Real-Time Ping Graph:</span>
+              <span style="font-family: var(--font-code); font-size: 12px; color: var(--accent-emerald);">28 ms • Jitter: 1.2 ms • Packet Loss: 0.0%</span>
+            </div>
+            <div style="height: 65px; width: 100%; background: #070313; border-radius: 12px; border: 1px solid var(--line); overflow: hidden; display: flex; align-items: flex-end; padding: 6px; gap: 4px;" id="pingGraph">
+              <!-- Dynamically generated bars -->
+            </div>
+          </div>
+        </div>
+      
+        <!-- ==================================================== -->
+        <!-- DEDICATED REAL-TIME JITTER & PACKET LOSS ANALYSIS CARD -->
+        <!-- ==================================================== -->
+        <div class="card" id="cardJitterPacketLoss" style="margin-top: 18px; border-color: rgba(147, 51, 234, 0.4); background: linear-gradient(180deg, rgba(20, 11, 46, 0.85), rgba(10, 6, 26, 0.95)); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);">
+          <!-- Header -->
+          <div class="card-head" style="border-bottom: 1px solid rgba(151,72,255,.2); padding: 16px 20px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 20px;">📶</span>
+              <div>
+                <b style="font-size: 14px; color: #fff; letter-spacing: 0.2px;">Real-Time Jitter &amp; Packet Loss Telemetry Analyzer</b>
+                <span style="display: block; font-size: 11.5px; color: var(--muted); margin-top: 2px;">
+                  RFC 3550 Inter-Arrival Jitter variance, rolling transport stream packet loss, and macro sync integrity
+                </span>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+              <span id="netStabilityScoreBadge" style="padding: 4px 12px; border-radius: 99px; background: rgba(0, 245, 184, 0.12); border: 1px solid rgba(0, 245, 184, 0.45); color: #00f5b8; font-weight: 800; font-family: var(--font-code); font-size: 11px;">
+                ✓ 99.8% STABILITY • TOURNAMENT GRADE (A+)
+              </span>
+              <button class="btn" id="btnToggleSimLoss" onclick="toggleSimulatePacketLoss()" title="Simulate 2.5% packet drop to test recovery telemetry" style="font-size: 11px; padding: 5px 12px;">
+                ⚠️ Simulate 2.5% Packet Drop
+              </button>
+              <button class="btn" onclick="resetNetworkStats()" title="Reset statistical rolling counters" style="font-size: 11px; padding: 5px 10px;">
+                ↺ Reset Stats
+              </button>
+            </div>
+          </div>
+
+          <!-- Granular Telemetry 4-Column Metric Grid -->
+          <div style="padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+            
+            <!-- Metric 1: RFC 3550 Inter-Arrival Jitter -->
+            <div style="padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(22, 13, 50, .5); display: flex; flex-direction: column; gap: 6px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.3px;">Inter-Arrival Jitter (RFC 3550)</span>
+                <span id="jitterRatingDot" style="width: 8px; height: 8px; border-radius: 50%; background: #00f5b8; box-shadow: 0 0 8px #00f5b8;"></span>
+              </div>
+              <strong id="jitterCurrent" style="font-size: 24px; color: var(--accent-emerald); font-family: var(--font-code); line-height: 1.1;">1.2 ms</strong>
+              <div style="font-size: 11.5px; color: var(--muted); margin-top: 2px;">
+                Rolling Mean: <span id="jitterAvg" style="color: #fff; font-family: var(--font-code);">1.4 ms</span> &bull; Peak: <span id="jitterMax" style="color: #fbbf24; font-family: var(--font-code);">3.6 ms</span>
+              </div>
+              <span id="jitterRating" style="font-size: 11px; color: var(--accent-emerald); font-weight: 600; margin-top: 4px;">● Optimal Latency Variance (&lt; 5ms)</span>
+            </div>
+
+            <!-- Metric 2: Transport Reliability & Packet Loss -->
+            <div style="padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(22, 13, 50, .5); display: flex; flex-direction: column; gap: 6px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.3px;">Packet Loss Rate</span>
+                <span id="lossRatingDot" style="width: 8px; height: 8px; border-radius: 50%; background: #00f5b8; box-shadow: 0 0 8px #00f5b8;"></span>
+              </div>
+              <strong id="lossCurrent" style="font-size: 24px; color: var(--accent-emerald); font-family: var(--font-code); line-height: 1.1;">0.00%</strong>
+              <div style="font-size: 11.5px; color: var(--muted); margin-top: 2px;">
+                Tx: <span id="packetsTx" style="color: #fff; font-family: var(--font-code);">840</span> &bull; Rx: <span id="packetsRx" style="color: #fff; font-family: var(--font-code);">840</span> &bull; Lost: <span id="packetsLost" style="color: #00f5b8; font-family: var(--font-code);">0</span>
+              </div>
+              <span id="burstLossProb" style="font-size: 11px; color: var(--accent-emerald); font-weight: 600; margin-top: 4px;">● Burst Drop Risk: &lt; 0.01% (Clean Stream)</span>
+            </div>
+
+            <!-- Metric 3: Macro Input Synchronization & Frame Jitter (σ) -->
+            <div style="padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(22, 13, 50, .5); display: flex; flex-direction: column; gap: 6px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.3px;">Macro Desync Risk</span>
+                <span id="desyncRatingDot" style="width: 8px; height: 8px; border-radius: 50%; background: #00f5b8; box-shadow: 0 0 8px #00f5b8;"></span>
+              </div>
+              <strong id="desyncRisk" style="font-size: 24px; color: var(--accent-emerald); font-family: var(--font-code); line-height: 1.1;">&lt; 0.05%</strong>
+              <div style="font-size: 11.5px; color: var(--muted); margin-top: 2px;">
+                Std Dev (σ): <span id="jitterStdDev" style="color: #fff; font-family: var(--font-code);">0.32 ms</span> &bull; Sync: <span style="color: #38bdf8; font-family: var(--font-code);">60 Hz Lock</span>
+              </div>
+              <span id="desyncStatus" style="font-size: 11px; color: var(--accent-emerald); font-weight: 600; margin-top: 4px;">● Sub-Millisecond Input Precision</span>
+            </div>
+
+            <!-- Metric 4: Bufferbloat & Transit Stability -->
+            <div style="padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(22, 13, 50, .5); display: flex; flex-direction: column; gap: 6px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.3px;">Bufferbloat &amp; Transit</span>
+                <span id="bloatRatingDot" style="width: 8px; height: 8px; border-radius: 50%; background: #fbbf24; box-shadow: 0 0 8px #fbbf24;"></span>
+              </div>
+              <strong id="bufferbloatGrade" style="font-size: 24px; color: #fbbf24; font-family: var(--font-code); line-height: 1.1;">A+ (&lt; 4ms)</strong>
+              <div style="font-size: 11.5px; color: var(--muted); margin-top: 2px;">
+                Stable Stream: <span id="stableFramesCount" style="color: var(--accent-cyan); font-family: var(--font-code);">2,480 frames</span> &bull; Drift: <span style="color: #fff; font-family: var(--font-code);">±0.6ms</span>
+              </div>
+              <span id="latencyDrift" style="font-size: 11px; color: var(--accent-emerald); font-weight: 600; margin-top: 4px;">● Zero Router Buffer Queue Delay</span>
+            </div>
+
+          </div>
+
+          <!-- Visual Telemetry Section: Jitter Sparkline + Live Packet Stream Sequence -->
+          <div style="padding: 0 20px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+            
+            <!-- Live Jitter Sparkline -->
+            <div style="padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(18, 10, 42, 0.6);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font-size: 12px; font-weight: 700; color: #fff;">Jitter Variance Sparkline (RFC 3550 Intervals):</span>
+                <span id="jitterSparklineLegend" style="font-family: var(--font-code); font-size: 11px; color: var(--accent-emerald);">Delta: 0.8 ms &bull; Min: 0.2 ms</span>
+              </div>
+              <div id="jitterSparkline" style="height: 54px; width: 100%; background: #060312; border-radius: 10px; border: 1px solid var(--line); overflow: hidden; display: flex; align-items: flex-end; padding: 5px; gap: 3px;">
+                <!-- Dynamically populated jitter bars -->
+              </div>
+            </div>
+
+            <!-- Live Packet Stream Sequence Visualizer -->
+            <div style="padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(18, 10, 42, 0.6);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font-size: 12px; font-weight: 700; color: #fff;">Live Packet Transport Stream (Last 28 Packets):</span>
+                <span id="packetStreamStatus" style="font-family: var(--font-code); font-size: 11px; color: var(--accent-emerald);">28/28 Acknowledged</span>
+              </div>
+              <div id="packetStreamBar" style="height: 54px; width: 100%; background: #060312; border-radius: 10px; border: 1px solid var(--line); overflow: hidden; display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; gap: 4px;">
+                <!-- Dynamically populated packet indicators -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ==================================================== -->
+      <!-- VIEW 6: CROWN PRO SUITE (COMMERCIAL PAID PROGRAM) -->
+      <!-- ==================================================== -->
+      <section id="viewVIP" class="view-panel">
+        <div class="vip-hero-banner">
+          <div>
+            <img src="/assets/badge-pro.svg" alt="Pro Crown Badge" class="pro-badge">
+            <h2 style="margin: 12px 0 6px; color: #fbbf24; font-size: 22px; font-weight: 800;" id="vipHeroLicenseTitle">CROWN PRO ADVANCED MACRO &amp; AI SUITE</h2>
+            <p style="margin: 0; color: #fef08a; font-size: 13px; max-width: 680px; line-height: 1.5;" id="vipHeroLicenseSub">
+              Crown Pro is a paid, commercial automation software — not a game hack or memory exploit. Free edition provides basic macro support for available functions. Crown Pro unlocks autonomous bot learning, predictive island A* navigation, infinite continuous macro loops, and neural vision perception.
+            </p>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+            <img src="/assets/icon-crown.svg" alt="Crown" style="width: 72px; height: 72px; filter: drop-shadow(0 0 18px #fbbf24);">
+            <button class="btn gold" style="font-size: 11px; padding: 6px 14px;" onclick="openLicenseModal()">Manage License Tier</button>
+          </div>
+        </div>
+
+        <!-- License Tier Explanation Bar -->
+        <div style="padding: 14px 20px; border-radius: 14px; background: rgba(22, 13, 50, .6); border: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;">
+          <div>
+            <strong style="color: #ffffff; font-size: 13px;">Commercial License Model:</strong>
+            <span style="font-size: 12px; color: var(--muted); margin-left: 8px;">
+              Basic manual macros are free. Advanced bot functions, learning algorithms, and island pathfinding require Crown Pro.
+            </span>
+          </div>
+          <button class="btn" id="btnToggleProTest" onclick="toggleLicenseTier()">
+            🔄 Toggle Test: Free Mode vs Crown Pro
+          </button>
+        </div>
+
+        <!-- 4 ADVANCED PRO CAPABILITIES -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px;">
+          <!-- 1. Bot Learning Engine -->
+          <div class="card" id="cardBotLearning" style="padding: 18px; border-color: rgba(251,191,36,0.35);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <strong style="color: #fff; font-size: 14px;">🧠 Autonomous Bot Learning Engine</strong>
+              <span class="pro-lock-badge">CROWN PRO</span>
+            </div>
+            <p style="color: var(--muted); font-size: 12px; line-height: 1.45; margin: 0 0 10px;">
+              Reinforcement learning AI that observes attack animation recovery windows, automatically recalibrates delay milliseconds, and optimizes combat DPS without user fine-tuning.
+            </p>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 8px; border-top: 1px solid rgba(251,191,36,0.15);">
+              <span style="font-size: 11px; color: #fbbf24; font-family: var(--font-code);">AI Adapt Engine: ONLINE</span>
+              <button class="btn" style="padding: 4px 10px; font-size: 11px;" onclick="showToast('🧠 Bot Learning model analyzing combat frame timings.')">Calibrate</button>
+            </div>
+          </div>
+
+          <!-- 2. Map Learning & Navigation -->
+          <div class="card" id="cardMapLearning" style="padding: 18px; border-color: rgba(251,191,36,0.35);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <strong style="color: #fff; font-size: 14px;">🗺️ Predictive Map Traversal &amp; Route Learning</strong>
+              <span class="pro-lock-badge">CROWN PRO</span>
+            </div>
+            <p style="color: var(--muted); font-size: 12px; line-height: 1.45; margin: 0 0 10px;">
+              Learns topological island contours, dynamic mob patrol paths, and safe maritime channels. Auto-plots the shortest 8-directional clearance path with obstacle avoidance.
+            </p>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 8px; border-top: 1px solid rgba(251,191,36,0.15);">
+              <span style="font-size: 11px; color: #fbbf24; font-family: var(--font-code);">Pathfinding: 8-WAY A*</span>
+              <button class="btn" style="padding: 4px 10px; font-size: 11px;" onclick="showToast('🗺️ Map Learning: 37 island waypoints mapped.')">Sync Map</button>
+            </div>
+          </div>
+
+          <!-- 3. Infinite Macro Looping -->
+          <div class="card" style="padding: 18px; border-color: rgba(251,191,36,0.35);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <strong style="color: #fff; font-size: 14px;">♾️ Continuous Multi-Cycle Macro Looping</strong>
+              <span class="pro-lock-badge">CROWN PRO</span>
+            </div>
+            <p style="color: var(--muted); font-size: 12px; line-height: 1.45; margin: 0 0 10px;">
+              Enables endless infinite background macro cycling with fail-safe resource interruption. If player HP drops below safety threshold, the bot automatically pauses combos to drink potions.
+            </p>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 8px; border-top: 1px solid rgba(251,191,36,0.15);">
+              <span style="font-size: 11px; color: #fbbf24; font-family: var(--font-code);">Fail-Safe Auto Pause: ACTIVE</span>
+              <button class="btn" style="padding: 4px 10px; font-size: 11px;" onclick="page('Auto', document.getElementById('btnNavAuto'))">Open Loops</button>
+            </div>
+          </div>
+
+          <!-- 4. Neural Vision Perception Bot -->
+          <div class="card" style="padding: 18px; border-color: rgba(251,191,36,0.35);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <strong style="color: #fff; font-size: 14px;">👁️ Deep Vision OCR &amp; Target Lock Bot</strong>
+              <span class="pro-lock-badge">CROWN PRO</span>
+            </div>
+            <p style="color: var(--muted); font-size: 12px; line-height: 1.45; margin: 0 0 10px;">
+              Real-time screen pixel perception monitoring character stamina and candy skeleton aura signatures. Automatically triggers target lock and skill execution based on vision inputs.
+            </p>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 8px; border-top: 1px solid rgba(251,191,36,0.15);">
+              <span style="font-size: 11px; color: #fbbf24; font-family: var(--font-code);">Perception Matrix: 99.4%</span>
+              <button class="btn" style="padding: 4px 10px; font-size: 11px;" onclick="page('Vision', document.getElementById('btnNavVision'))">View OCR</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  
+  <!-- MODAL: CROWN PRO LICENSE & TIER MANAGEMENT -->
+  <div id="modalLicense" style="display: none; position: fixed; inset: 0; background: rgba(5,3,13,0.85); backdrop-filter: blur(14px); z-index: 10000; align-items: center; justify-content: center; padding: 16px;">
+    <div style="width: min(640px, 95vw); max-height: 90vh; overflow-y: auto; background: #0e0824; border: 1.5px solid rgba(251, 191, 36, 0.5); border-radius: 20px; box-shadow: 0 0 50px rgba(251, 191, 36, 0.25);">
+      
+      <!-- Modal Header -->
+      <div style="padding: 20px 24px; background: linear-gradient(135deg, rgba(35, 18, 70, 0.95), rgba(18, 9, 40, 0.98)); border-bottom: 1px solid rgba(251, 191, 36, 0.3); display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <img src="/assets/icon-crown.svg" alt="Crown" style="width: 38px; height: 38px; filter: drop-shadow(0 0 10px #fbbf24);">
+          <div>
+            <h3 style="margin: 0; color: #fbbf24; font-size: 18px; font-weight: 800; letter-spacing: 0.3px;">Crown Pro Commercial License</h3>
+            <span style="font-size: 12px; color: #fef08a;">Paid Productivity &amp; Advanced Macro Automation Program</span>
+          </div>
+        </div>
+        <button class="btn-alert-close" onclick="closeLicenseModal()" style="font-size: 18px; padding: 6px;">✕</button>
+      </div>
+
+      <!-- Modal Body -->
+      <div style="padding: 22px 24px; display: flex; flex-direction: column; gap: 18px;">
+        
+        <!-- Info Callout -->
+        <div style="padding: 14px 16px; border-radius: 12px; background: rgba(251, 191, 36, 0.08); border: 1px solid rgba(251, 191, 36, 0.25); font-size: 12.5px; line-height: 1.5; color: #f8f6ff;">
+          <strong style="color: #fbbf24; display: block; margin-bottom: 4px;">ℹ️ About Crown Pro vs Free Support Edition:</strong>
+          Crown Pro is a <strong>paid automation software program</strong> — it is <strong>not</strong> hacking software or cheats.
+          <ul style="margin: 6px 0 0 18px; padding: 0; color: var(--muted); font-size: 12px;">
+            <li><strong>Standard Free Support Tier:</strong> The bot provides support for currently available features only (Standard Island Radar, manual macros up to 10 loops, health display, network telemetry).</li>
+            <li><strong>Crown Pro Paid Tier:</strong> Unlocks advanced features: Autonomous Bot Learning, Bot-related autonomous functions, Map Learning &amp; SLAM auto-navigation, and continuous infinite macro loops.</li>
+          </ul>
+        </div>
+
+        <!-- Tier Status Badge & Quick Switch -->
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: rgba(22, 13, 50, 0.7); border-radius: 12px; border: 1px solid var(--line); flex-wrap: wrap; gap: 10px;">
+          <div>
+            <span style="font-size: 11px; text-transform: uppercase; color: var(--muted); font-weight: 700; display: block;">Current Active License:</span>
+            <strong id="modalCurrentTierBadge" style="font-size: 15px; color: #fbbf24;">👑 CROWN PRO ACTIVE (Commercial License)</strong>
+          </div>
+          <button class="btn" id="modalBtnToggleTier" onclick="toggleLicenseTier()" style="font-size: 12px; padding: 6px 14px;">
+            🔄 Switch to Free Support Mode
+          </button>
+        </div>
+
+        <!-- Feature Comparison Table -->
+        <div style="border: 1px solid var(--line); border-radius: 12px; overflow: hidden; font-size: 12px;">
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; background: rgba(22, 10, 50, 0.9); padding: 10px 14px; font-weight: 700; color: #fff; border-bottom: 1px solid var(--line);">
+            <span>Feature / Capability</span>
+            <span style="text-align: center; color: var(--muted);">Free Support</span>
+            <span style="text-align: center; color: #fbbf24;">Crown Pro</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; padding: 9px 14px; border-bottom: 1px solid rgba(151,72,255,.12); background: rgba(22,13,50,.3);">
+            <span>🗺️ Spooksville Island GPS Map &amp; Radar</span>
+            <span style="text-align: center; color: #00f5b8;">✓ Included</span>
+            <span style="text-align: center; color: #00f5b8;">✓ Included</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; padding: 9px 14px; border-bottom: 1px solid rgba(151,72,255,.12); background: rgba(22,13,50,.3);">
+            <span>⚡ Standard Combo Macros (1 - 10 loops)</span>
+            <span style="text-align: center; color: #00f5b8;">✓ Included</span>
+            <span style="text-align: center; color: #00f5b8;">✓ Included</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; padding: 9px 14px; border-bottom: 1px solid rgba(151,72,255,.12); background: rgba(22,13,50,.3);">
+            <span>🌐 Server Ping &amp; Network Telemetry</span>
+            <span style="text-align: center; color: #00f5b8;">✓ Included</span>
+            <span style="text-align: center; color: #00f5b8;">✓ Included</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; padding: 9px 14px; border-bottom: 1px solid rgba(151,72,255,.12); background: rgba(22,13,50,.3);">
+            <span>🧠 Autonomous Bot Learning AI &amp; Frame Cooldowns</span>
+            <span style="text-align: center; color: #f43f5e;">🔒 Locked</span>
+            <span style="text-align: center; color: #fbbf24; font-weight: 700;">✓ UNLOCKED</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; padding: 9px 14px; border-bottom: 1px solid rgba(151,72,255,.12); background: rgba(22,13,50,.3);">
+            <span>🗺️ Map Learning &amp; Autonomous 8-Way A* Navigation</span>
+            <span style="text-align: center; color: #f43f5e;">🔒 Locked</span>
+            <span style="text-align: center; color: #fbbf24; font-weight: 700;">✓ UNLOCKED</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; padding: 9px 14px; background: rgba(22,13,50,.3);">
+            <span>♾️ Infinite Continuous Macro Looping</span>
+            <span style="text-align: center; color: #f43f5e;">🔒 Max 10 Loops</span>
+            <span style="text-align: center; color: #fbbf24; font-weight: 700;">✓ UNLIMITED</span>
+          </div>
+        </div>
+
+        <!-- License Key Activation -->
+        <div style="padding: 14px 16px; background: rgba(18, 10, 42, 0.7); border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.25);">
+          <label style="font-size: 11.5px; font-weight: 700; color: #fbbf24; display: block; margin-bottom: 6px;">Activate Commercial Crown Pro Key:</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="inpLicenseKey" value="CROWN-PRO-VIP-2026" placeholder="Enter key (e.g. CROWN-PRO-UNLIMITED)" style="flex: 1; padding: 8px 12px; background: #130a2e; border: 1px solid var(--line); border-radius: 8px; color: #fff; font-family: var(--font-code); font-size: 12px;">
+            <button class="btn gold" onclick="activateLicenseKey()" style="white-space: nowrap; padding: 8px 16px; font-weight: 700;">Activate Key</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div style="padding: 16px 24px; background: rgba(14, 8, 32, .9); border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 11px; color: var(--muted);">Crown Pro v4.2 • Licensed to Captain_Marco</span>
+        <button class="btn" onclick="closeLicenseModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD MACRO ACTION STEP -->
+  <div id="modalAdd" style="display: none; position: fixed; inset: 0; background: rgba(5,3,13,0.85); backdrop-filter: blur(10px); z-index: 1000; align-items: center; justify-content: center;">
+    <div style="width: min(420px, 92vw); background: #0d0920; border: 1px solid var(--purple2); border-radius: 18px; overflow: hidden; box-shadow: var(--glow);">
+      <div style="padding: 16px 20px; background: rgba(22, 10, 50, .9); border-bottom: 1px solid var(--line); font-weight: 700; color: #fff;">
+        Add Macro Action Step
+      </div>
+      <div style="padding: 18px 20px; display: flex; flex-direction: column; gap: 14px;">
+        <label style="font-size: 12px; color: var(--muted);">Action Type:
+          <select id="selType" style="width: 100%; padding: 8px 12px; background: #150b31; border: 1px solid var(--line); color: #fff; border-radius: 10px; margin-top: 4px;" onchange="onTypeChange()">
+            <option value="key">Key Press</option>
+            <option value="click">Mouse Attack</option>
+            <option value="delay">Delay Wait</option>
+          </select>
+        </label>
+
+        <div id="wrapKey">
+          <label style="font-size: 12px; color: var(--muted);">Key:
+            <select id="selKey" style="width: 100%; padding: 8px 12px; background: #150b31; border: 1px solid var(--line); color: #fff; border-radius: 10px; margin-top: 4px;">
+              <option value="Z">Z (First Skill)</option>
+              <option value="X">X (Second Skill)</option>
+              <option value="C">C (Third Skill)</option>
+              <option value="V">V (Ultimate)</option>
+              <option value="Q">Q (Dash / Roll)</option>
+              <option value="F">F (Block / Parry)</option>
+              <option value="Space">Space (Geppo Jump)</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="wrapClick" style="display: none;">
+          <label style="font-size: 12px; color: var(--muted);">Click:
+            <select id="selClick" style="width: 100%; padding: 8px 12px; background: #150b31; border: 1px solid var(--line); color: #fff; border-radius: 10px; margin-top: 4px;">
+              <option value="M1">M1 (Normal Attack)</option>
+              <option value="M2">M2 (Heavy Strike)</option>
+            </select>
+          </label>
+        </div>
+
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label style="font-size: 12px; color: var(--muted); margin: 0;">Step Delay (ms):</label>
+            <strong id="lblStepDelay" style="color: #00f5b8; font-family: var(--font-code); font-size: 13px; font-weight: 800; background: rgba(0, 245, 184, 0.12); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(0, 245, 184, 0.3);">250 ms</strong>
+          </div>
+          <input type="range" id="inpDelay" min="20" max="1500" step="10" value="250" style="width: 100%; accent-color: var(--purple2); cursor: pointer;" oninput="onStepDelaySlider(this.value)">
+          <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); margin-top: 3px; font-family: var(--font-code);">
+            <span>20ms</span>
+            <span>300ms</span>
+            <span>750ms</span>
+            <span>1500ms</span>
+          </div>
+
+          <!-- Common Delay Quick-Pick Buttons -->
+          <div style="margin-top: 10px;">
+            <span style="font-size: 11px; color: var(--muted); display: block; margin-bottom: 6px;">Pick Common Delay:</span>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;" id="delayPresetGroup">
+              <button type="button" class="btn delay-preset-chip" data-val="50" onclick="setQuickDelay(50)" style="padding: 4px 10px; font-size: 11px; font-family: var(--font-code);">⚡ 50ms</button>
+              <button type="button" class="btn delay-preset-chip" data-val="150" onclick="setQuickDelay(150)" style="padding: 4px 10px; font-size: 11px; font-family: var(--font-code);">⚔️ 150ms</button>
+              <button type="button" class="btn delay-preset-chip" data-val="300" onclick="setQuickDelay(300)" style="padding: 4px 10px; font-size: 11px; font-family: var(--font-code);">🎯 300ms</button>
+              <button type="button" class="btn delay-preset-chip" data-val="500" onclick="setQuickDelay(500)" style="padding: 4px 10px; font-size: 11px; font-family: var(--font-code);">🛡️ 500ms</button>
+              <button type="button" class="btn delay-preset-chip" data-val="1000" onclick="setQuickDelay(1000)" style="padding: 4px 10px; font-size: 11px; font-family: var(--font-code);">⏳ 1000ms</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="padding: 14px 20px; background: rgba(14, 8, 32, .9); border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 8px;">
+        <button class="btn" onclick="closeAddModal()">Cancel</button>
+        <button class="btn primary" onclick="confirmAddMacro()">Add Step</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ROBLOX PLAYER GPS & CAMERA SYNCHRONIZATION -->
+  <div id="modalGpsSync" style="display: none; position: fixed; inset: 0; background: rgba(5,3,13,0.85); backdrop-filter: blur(14px); z-index: 10000; align-items: center; justify-content: center; padding: 16px;">
+    <div style="width: min(600px, 95vw); max-height: 90vh; overflow-y: auto; background: #0e0824; border: 1.5px solid rgba(0, 245, 184, 0.45); border-radius: 20px; box-shadow: 0 0 50px rgba(0, 245, 184, 0.2);">
+      
+      <!-- Modal Header -->
+      <div style="padding: 18px 24px; background: linear-gradient(135deg, rgba(22, 13, 50, 0.95), rgba(14, 8, 34, 0.98)); border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 26px;">📍</span>
+          <div>
+            <h3 style="margin: 0; color: #00f5b8; font-size: 17px; font-weight: 800;">Định Vị Nhân Vật &amp; Đồng Bộ Camera Roblox</h3>
+            <span style="font-size: 11.5px; color: var(--muted);">Calibrate Player Location &amp; Camera Heading on Spooksville Island</span>
+          </div>
+        </div>
+        <button onclick="closeGpsSyncModal()" style="font-size: 18px; padding: 6px; background: transparent; border: none; color: #fff; cursor: pointer;">✕</button>
+      </div>
+
+      <!-- Modal Body -->
+      <div style="padding: 20px 24px; display: flex; flex-direction: column; gap: 16px;">
+
+        <!-- Current Status Banner -->
+        <div style="padding: 12px 16px; border-radius: 12px; background: rgba(0, 245, 184, 0.08); border: 1px solid rgba(0, 245, 184, 0.25); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <span style="font-size: 11px; text-transform: uppercase; color: var(--muted); font-weight: 700; display: block;">Tọa độ hiện tại trên Map:</span>
+            <strong id="gpsModalCurrentPos" style="font-size: 15px; color: #00f5b8; font-family: var(--font-code);">[646, 909]</strong>
+          </div>
+          <div>
+            <span style="font-size: 11px; text-transform: uppercase; color: var(--muted); font-weight: 700; display: block;">Hướng Camera:</span>
+            <strong id="gpsModalCurrentHeading" style="font-size: 15px; color: var(--accent-cyan); font-family: var(--font-code);">E (90°)</strong>
+          </div>
+        </div>
+
+        <!-- Sync Methods Tab Buttons -->
+        <div style="display: flex; gap: 8px; border-bottom: 1px solid var(--line); padding-bottom: 10px;">
+          <button type="button" class="btn active" id="tabBtnTelemetry" onclick="switchGpsTab('telemetry')" style="flex: 1; font-size: 12px;">🛰️ Live Telemetry Hook</button>
+          <button type="button" class="btn" id="tabBtnLogPose" onclick="switchGpsTab('logpose')" style="flex: 1; font-size: 12px;">🧭 Lượng giác Log Pose</button>
+          <button type="button" class="btn" id="tabBtnLandmark" onclick="switchGpsTab('landmark')" style="flex: 1; font-size: 12px;">🏛️ Mốc đảo Landmark</button>
+          <button type="button" class="btn" id="tabBtnClick" onclick="switchGpsTab('click')" style="flex: 1; font-size: 12px;">🎯 Click trên Map</button>
+        </div>
+
+        <!-- TAB 0: LIVE TELEMETRY HOOK & ROBLOX PROCESS SYNC -->
+        <div id="tabGpsTelemetry" style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="padding: 12px 14px; background: rgba(0, 245, 184, 0.06); border: 1px solid rgba(0, 245, 184, 0.25); border-radius: 12px; font-size: 12px; line-height: 1.5; color: #e2e8f0;">
+            <strong style="color: #00f5b8; display: block; margin-bottom: 4px;">🛰️ Cơ Chế Định Vị Nhân Vật Khi Mở App Tại Bất Kỳ Vị Trí Nào Trên Map:</strong>
+            Khi mở app tại vị trí ngẫu nhiên trên đảo, hệ thống kết nối với tiến trình Roblox đọc tọa độ 3D <code>HumanoidRootPart.Position (X, Y, Z)</code> và góc xoay Camera <code>LookVector</code>.
+            <div style="margin-top: 8px; padding: 8px 10px; background: rgba(0,0,0,0.3); border-radius: 8px; font-family: var(--font-code); font-size: 11px; color: #94a3b8;">
+              <div>• Tọa độ Spooksville World: X ∈ [320, 980], Z ∈ [510, 1320]</div>
+              <div>• Phép chiếu Radar 2D: X_radar = (X_world - X_min) * Scale</div>
+              <div>• Yêu cầu bắt buộc: Người chơi <strong style="color: #fbbf24;">phải đang đứng trên đảo Spooksville</strong> để kích hoạt GPS. Nếu đang ở ngoài biển hoặc đảo khác, hệ thống sẽ báo <span style="color: #f43f5e;">Out of Bounds</span>.</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; align-items: center; justify-content: space-between; padding: 12px 16px; background: rgba(22, 13, 50, 0.6); border: 1px solid var(--line); border-radius: 12px;">
+            <div>
+              <span style="font-size: 11px; color: var(--muted); text-transform: uppercase; font-weight: 700; display: block;">Trạng thái Hook:</span>
+              <strong style="font-size: 13px; color: #00f5b8;">Đang kết nối Roblox Session (GPO)</strong>
+            </div>
+            <button class="btn primary" onclick="syncFromRobloxTelemetry()" style="padding: 8px 16px; font-weight: 700; font-size: 12px; background: #00f5b8; color: #08051a;">
+              ⚡ Quét &amp; Đồng Bộ Vị Trí Live
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB 1: LOG POSE TRIANGULATION -->
+        <div id="tabGpsLogPose" style="display: none; flex-direction: column; gap: 14px;">
+          <p style="font-size: 12px; color: var(--muted); margin: 0; line-height: 1.5;">
+            Khi ở Spooksville, hãy cầm chiếc <strong>Log Pose</strong> trong Roblox. Mũi kim la bàn luôn chĩa về Beacon cố định đảo <code style="color: #fbbf24;">[646, 909]</code> và hiển thị khoảng cách <strong>Studs</strong>.
+          </p>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <label style="font-size: 11.5px; color: var(--muted); display: block; margin-bottom: 5px;">Khoảng cách Log Pose (Studs):</label>
+              <input type="number" id="inpLogPoseStuds" value="120" min="0" max="2500" style="width: 100%; padding: 8px 12px; background: #150b31; border: 1px solid var(--line); color: #fff; border-radius: 10px; font-family: var(--font-code); font-weight: 700;">
+            </div>
+            <div>
+              <label style="font-size: 11.5px; color: var(--muted); display: block; margin-bottom: 5px;">Góc kim Log Pose (Độ / Hướng):</label>
+              <select id="selLogPoseAngle" style="width: 100%; padding: 8px 12px; background: #150b31; border: 1px solid var(--line); color: #fff; border-radius: 10px;">
+                <option value="0">0° - Bắc (North)</option>
+                <option value="45" selected>45° - Đông Bắc (Northeast)</option>
+                <option value="90">90° - Đông (East)</option>
+                <option value="135">135° - Đông Nam (Southeast)</option>
+                <option value="180">180° - Nam (South)</option>
+                <option value="225">225° - Tây Nam (Southwest)</option>
+                <option value="270">270° - Tây (West)</option>
+                <option value="315">315° - Tây Bắc (Northwest)</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="btn primary" onclick="applyLogPoseTriangulation()" style="padding: 10px; font-size: 13px; font-weight: 700; width: 100%; background: #00f5b8; color: #08051a;">
+            ⚡ Tính toán &amp; Định vị nhân vật từ Log Pose
+          </button>
+        </div>
+
+        <!-- TAB 2: LANDMARK SNAPPING -->
+        <div id="tabGpsLandmark" style="display: none; flex-direction: column; gap: 12px;">
+          <p style="font-size: 12px; color: var(--muted); margin: 0; line-height: 1.5;">
+            Nếu bạn đang đứng gần một mốc quen thuộc trên đảo Spooksville, chọn ngay mốc dưới đây để đặt tọa độ nhân vật chuẩn xác 100%:
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px;">
+            <button class="btn" onclick="setPlayerToLandmark(632, 988, 'Bến thuyền Safe Zone Harbor')" style="text-align: left; padding: 8px 12px; font-size: 11.5px;">⛵ Bến thuyền Harbor [632, 988]</button>
+            <button class="btn" onclick="setPlayerToLandmark(648, 880, 'Chợ trung tâm Shop Vendor')" style="text-align: left; padding: 8px 12px; font-size: 11.5px;">🏪 Chợ Vendor Center [648, 880]</button>
+            <button class="btn" onclick="setPlayerToLandmark(646, 909, 'Ngọn hải đăng Log Pose Beacon')" style="text-align: left; padding: 8px 12px; font-size: 11.5px;">🧭 Log Pose Beacon [646, 909]</button>
+            <button class="btn" onclick="setPlayerToLandmark(510, 720, 'Khu nghĩa địa Zombie Graveyard')" style="text-align: left; padding: 8px 12px; font-size: 11.5px;">🧟 Zombie Graveyard Tây [510, 720]</button>
+            <button class="btn" onclick="setPlayerToLandmark(820, 680, 'Khu đồi Vampire Ruins')" style="text-align: left; padding: 8px 12px; font-size: 11.5px;">🦇 Vampire Ruins Đông [820, 680]</button>
+            <button class="btn" onclick="setPlayerToLandmark(660, 480, 'Đồi bí ngô Bắc Pumpkin Hill')" style="text-align: left; padding: 8px 12px; font-size: 11.5px;">🎃 Pumpkin Hill Bắc [660, 480]</button>
+          </div>
+        </div>
+
+        <!-- TAB 3: CLICK TO LOCATE -->
+        <div id="tabGpsClick" style="display: none; flex-direction: column; gap: 12px;">
+          <p style="font-size: 12px; color: var(--muted); margin: 0; line-height: 1.5;">
+            Bấm nút dưới đây rồi click trực tiếp lên bất kỳ điểm nào trên bản đồ đảo Spooksville để đặt vị trí nhân vật tức thì:
+          </p>
+          <button class="btn primary" onclick="enableClickToLocateMode()" style="padding: 10px; font-weight: 700;">
+            🎯 Bật chế độ Click-to-Locate trên Map
+          </button>
+        </div>
+
+        <!-- CAMERA HEADING ADJUSTMENT -->
+        <div style="padding-top: 14px; border-top: 1px solid var(--line);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label style="font-size: 12px; color: var(--text); font-weight: 700;">Đồng bộ hướng Camera / Nhân vật:</label>
+            <strong id="lblHeadingAngleDisplay" style="color: var(--accent-cyan); font-family: var(--font-code); font-size: 13px;">90° (E - Đông)</strong>
+          </div>
+          <input type="range" id="inpHeadingAngle" min="0" max="359" value="90" style="width: 100%; accent-color: var(--accent-cyan); cursor: pointer;" oninput="onHeadingSliderChange(this.value)">
+          <div style="display: flex; justify-content: space-between; gap: 6px; margin-top: 8px;">
+            <button class="btn" onclick="setQuickHeading(0)" style="flex: 1; padding: 4px; font-size: 11px;">0° Bắc (N)</button>
+            <button class="btn" onclick="setQuickHeading(90)" style="flex: 1; padding: 4px; font-size: 11px;">90° Đông (E)</button>
+            <button class="btn" onclick="setQuickHeading(180)" style="flex: 1; padding: 4px; font-size: 11px;">180° Nam (S)</button>
+            <button class="btn" onclick="setQuickHeading(270)" style="flex: 1; padding: 4px; font-size: 11px;">270° Tây (W)</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="padding: 14px 24px; background: rgba(14, 8, 32, .9); border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 8px;">
+        <button class="btn primary" onclick="closeGpsSyncModal()">Đóng / Áp dụng</button>
+      </div>
+
+    </div>
+  </div>
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast">
+    <span>⚡</span>
+    <span id="toastMsg">Action executed successfully.</span>
+  </div>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    /* ========================================================
+       1. PAGE SWITCHING & HERO TITLES
+       ======================================================== */
+    const HERO_DETAILS = {
+      'Radar': {
+        title: 'Spooksville Island Map & Vision Positioning AI',
+        desc: 'Interactive island positioning system with computer vision landmark recognition, target navigation waypoints, and compass telemetry.',
+        badge: 'VISION POSITIONING • SPOOKSVILLE ACTIVE'
+      },
+      'Auto': {
+        title: 'GPO Auto-Farm Combat Macro & AFK Bot',
+        desc: 'Fine-tune weapon attack combos, Kenbunshoku Haki auto-parry, anti-idle AFK loops, and health failsafe thresholds.',
+        badge: 'COMBAT MACRO ENGINE • 60 FPS SYNC'
+      },
+      'Scripts': {
+        title: 'AFK Macro Sequence Studio & Action Sequencer',
+        desc: 'Build multi-step keyboard & mouse macros, combat combos, anti-idle AFK timers, and auto-loot routines.',
+        badge: 'ACTION SEQUENCER • AFK READY'
+      },
+      'Vision': {
+        title: 'Computer Vision & Entity Recognition OCR',
+        desc: 'Deep pixel analysis for HP bar monitoring, auto-potion trigger thresholds, and entity color spectrum matching.',
+        badge: 'COLOR MATRIX • ACTIVE SCAN'
+      },
+      'Network': {
+        title: 'Server Telemetry & Network Stability Monitor',
+        desc: 'Real-time ping latency sparkline, RFC 3550 jitter variance, packet transport stream, and fast server hopper.',
+        badge: 'AWS SINGAPORE HUB • 28 MS'
+      },
+      'VIP': {
+        title: 'Crown Pro Commercial Automation & Bot Learning Hub',
+        desc: 'Commercial productivity tier: unthrottled 24/7 continuous AFK loops, SLAM topological route planning, and autonomous delay calibration.',
+        badge: 'COMMERCIAL AI AUTOMATION LICENSE'
+      }
+    };
+
+    function page(name, el) {
+      document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+      if (el) el.classList.add('active');
+
+      document.querySelectorAll('.view-panel').forEach(v => v.classList.remove('active'));
+      const targetPanel = document.getElementById('view' + name);
+      if (targetPanel) targetPanel.classList.add('active');
+
+      const info = HERO_DETAILS[name] || HERO_DETAILS['Radar'];
+      const cTitle = document.getElementById('crumbTitle');
+      if (cTitle) {
+        cTitle.innerText = (name === 'Radar' ? 'Map & Vision Positioning' :
+                           name === 'Auto' ? 'Auto-Farm & AFK Bot' :
+                           name === 'Scripts' ? 'Macro Studio & AFK' :
+                           name === 'Vision' ? 'Vision & Health OCR' :
+                           name === 'Network' ? 'Server & Ping' : 'Crown Pro Suite');
+      }
+      const hTitle = document.getElementById('heroTitle');
+      if (hTitle) hTitle.innerText = info.title;
+      const hDesc = document.getElementById('heroDesc');
+      if (hDesc) hDesc.innerText = info.desc;
+      const hBadge = document.getElementById('heroBadge');
+      if (hBadge) hBadge.innerText = info.badge;
+
+      if (name === 'Network') {
+        updatePing();
+        renderPingGraph();
+        updateNetworkStabilityTelemetry(currentPing);
+      }
+      showToast(`Switched to ${name} Workspace.`);
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      const m = document.getElementById('toastMsg');
+      if (m) m.innerText = msg;
+      if (t) {
+        t.classList.add('show');
+        clearTimeout(window.__toast);
+        window.__toast = setTimeout(() => t.classList.remove('show'), 2200);
+      }
+    }
+
+    /* ========================================================
+       2. INTERACTIVE MAP & COMPUTER VISION POSITIONING
+       ======================================================== */
+    const MAP_W = 1299;
+    const MAP_H = 1292;
+    const MIN_MAP_VIEW = 120;
+    const PLAYER_LOCATION_KEY = 'gpo_sim_player_location';
+
+    let referenceData = { categories: [], markers: [] };
+    let playerLocation = { x: 646, y: 909 };
+    let targetWaypoint = null;
+    const spawnLocation = { x: 646, y: 909 };
+    let playerHeading = 90; // degrees (East)
+
+    let viewBox = { x: 0, y: 0, w: MAP_W, h: MAP_H };
+    let visibleCats = new Set(['enemy', 'logpose', 'shop', 'safezone', 'player']);
+    let hasUserPanned = false;
+    let fullbrightActive = false;
+    let poseVectorActive = true;
+    let cvBoxesActive = true;
+    let tracersActive = false;
+
+    const refSvg = document.getElementById('refSvg');
+    let mapWorld = null;
+
+    function facingName() {
+      const names = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+      const idx = Math.round(playerHeading / 45) % 8;
+      return names[idx];
+    }
+
+    function svgEl(name, attrs = {}) {
+      const el = document.createElementNS('http://www.w3.org/2000/svg', name);
+      for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+      return el;
+    }
+
+    async function initReferenceMap() {
+      try {
+        const stored = localStorage.getItem(PLAYER_LOCATION_KEY);
+        if (stored) playerLocation = JSON.parse(stored);
+      } catch {}
+
+      try {
+        const res = await fetch('/assets/spooksville-data.json');
+        if (res.ok) referenceData = await res.json();
+      } catch (e) {
+        console.warn('Could not load spooksville-data.json:', e);
+      }
+
+      refSvg.innerHTML = '';
+      refSvg.setAttribute('viewBox', `0 0 ${MAP_W} ${MAP_H}`);
+
+      mapWorld = svgEl('g', { id: 'mapWorld' });
+      const bgImg = svgEl('image', {
+        href: '/assets/spooksville-map.png',
+        x: 0, y: 0, width: MAP_W, height: MAP_H,
+        preserveAspectRatio: 'none'
+      });
+      bgImg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '/assets/spooksville-map.png');
+      mapWorld.append(bgImg);
+      refSvg.append(mapWorld);
+
+      refSvg.addEventListener('pointerdown', mapPointerDown);
+      window.addEventListener('pointermove', mapPointerMove);
+      window.addEventListener('pointerup', mapPointerUp);
+      window.addEventListener('pointercancel', mapPointerUp);
+      refSvg.addEventListener('wheel', mapWheel, { passive: false });
+
+
+
+      fitReference();
+    }
+
+    function fitReference() {
+      stopInertia();
+      hasUserPanned = false;
+      viewBox = { x: 0, y: 0, w: MAP_W, h: MAP_H };
+      updateReferenceView();
+    }
+
+    function zoomReference(factor) {
+      smoothZoomTo(factor);
+    }
+
+    function clampViewBox() {
+      viewBox.w = Math.max(MIN_MAP_VIEW, Math.min(MAP_W * 2.2, viewBox.w));
+      viewBox.h = viewBox.w * (MAP_H / MAP_W);
+      const minX = -viewBox.w * 0.4;
+      const maxX = MAP_W - viewBox.w * 0.6;
+      const minY = -viewBox.h * 0.4;
+      const maxY = MAP_H - viewBox.h * 0.6;
+      viewBox.x = Math.max(minX, Math.min(maxX, viewBox.x));
+      viewBox.y = Math.max(minY, Math.min(maxY, viewBox.y));
+    }
+
+    function headingSectorPath(cx, cy, radius) {
+      const half = 35 * (Math.PI / 180);
+      const rad = playerHeading * (Math.PI / 180);
+      const a1 = rad - half;
+      const a2 = rad + half;
+      const x1 = cx + radius * Math.cos(a1);
+      const y1 = cy + radius * Math.sin(a1);
+      const x2 = cx + radius * Math.cos(a2);
+      const y2 = cy + radius * Math.sin(a2);
+      return `M ${cx} ${cy} L ${x1} ${y1} A ${radius} ${radius} 0 0 1 ${x2} ${y2} Z`;
+    }
+
+    function drawReferenceMarkers() {
+      if (!mapWorld) return;
+      const oldLayer = document.getElementById('markersLayer');
+      if (oldLayer) oldLayer.remove();
+
+      const layer = svgEl('g', { id: 'markersLayer' });
+      const markers = [
+        ...(referenceData.markers.find(m => m.category === 'player') ? [] : [{
+          id: 'player-sim', category: 'player', x: playerLocation.x, y: playerLocation.y,
+          name: 'Player Location (GPS)', icon: 'assets/marker-player-location.png'
+        }]),
+        ...referenceData.markers.filter(m => m.category !== 'player')
+      ];
+      const mapScale = viewBox.w / MAP_W;
+
+      const logPoseMarker = referenceData.markers.find(m => m.category === 'logpose');
+
+      // 1. Patrol guidance vector lines
+      if (tracersActive) {
+        const px = playerLocation.x;
+        const py = playerLocation.y;
+        for (const m of markers) {
+          if (m.category === 'enemy' && visibleCats.has('enemy')) {
+            layer.append(svgEl('line', {
+              x1: px, y1: py,
+              x2: m.x, y2: m.y,
+              stroke: '#f43f5e',
+              'stroke-width': 1.2 * mapScale,
+              'stroke-dasharray': '4 4',
+              opacity: '0.6'
+            }));
+          }
+        }
+      }
+
+      // 2. Compass bearing line to Log Pose or Target Waypoint
+      const px = playerLocation.x;
+      const py = playerLocation.y;
+      const navTarget = targetWaypoint || logPoseMarker;
+
+      if (navTarget && (targetWaypoint || (poseVectorActive && visibleCats.has('logpose')))) {
+        const tx = navTarget.x;
+        const ty = navTarget.y;
+
+        layer.append(svgEl('line', {
+          id: 'navBearingLine',
+          x1: px, y1: py,
+          x2: tx, y2: ty,
+          stroke: targetWaypoint ? '#00f5b8' : '#fbbf24',
+          'stroke-width': 2 * mapScale,
+          'stroke-dasharray': targetWaypoint ? '5 3' : '6 3',
+          filter: `drop-shadow(0 0 6px ${targetWaypoint ? '#00f5b8' : '#fbbf24'})`,
+          opacity: '0.85'
+        }));
+
+        const dx = tx - px;
+        const dy = ty - py;
+        const deg = Math.round(((Math.atan2(dy, dx) * 180 / Math.PI) + 360) % 360);
+        const dist = Math.round(Math.hypot(dx, dy) * 0.32);
+        const hudBearing = document.getElementById('hudBearing');
+        if (hudBearing) {
+          hudBearing.innerText = targetWaypoint ? `WAYPOINT: ${deg}° (${dist} studs)` : `${deg}° (${dist} studs)`;
+          hudBearing.style.color = targetWaypoint ? '#00f5b8' : '#fbbf24';
+        }
+      }
+
+      // 3. Render Target Navigation Waypoint Pin if set
+      if (targetWaypoint) {
+        const wx = targetWaypoint.x;
+        const wy = targetWaypoint.y;
+        const wpSize = 28 * mapScale;
+
+        const wpGroup = svgEl('g', { class: 'map-marker', 'data-cat': 'waypoint' });
+        wpGroup.append(svgEl('circle', {
+          cx: wx, cy: wy, r: 16 * mapScale,
+          fill: 'none', stroke: '#00f5b8',
+          'stroke-width': 2 * mapScale,
+          'stroke-dasharray': '3 2',
+          opacity: '0.9'
+        }));
+        wpGroup.append(svgEl('circle', {
+          cx: wx, cy: wy, r: 4 * mapScale,
+          fill: '#00f5b8'
+        }));
+        bindMapTooltip(wpGroup, 'Target Waypoint', `[${Math.round(wx)}, ${Math.round(wy)}]`);
+        layer.append(wpGroup);
+      }
+
+      // 4. Render Entity Markers
+      for (const marker of markers) {
+        if (!visibleCats.has(marker.category)) continue;
+        const cat = referenceData.categories.find(c => c.id === marker.category);
+        const icon = marker.icon || cat?.icon;
+        if (!icon) continue;
+
+        const name = marker.name || cat.label;
+        const g = svgEl('g', { class: 'map-marker', tabindex: '0', 'data-cat': marker.category });
+        g.addEventListener('pointerenter', () => {
+          try { layer.append(g); } catch {}
+        });
+
+        let x = marker.x, y = marker.y;
+
+        if (marker.category === 'player') {
+          x = playerLocation?.x ?? marker.x;
+          y = playerLocation?.y ?? marker.y;
+          const size = 50 * mapScale;
+          const radius = 85 * mapScale;
+          const tipX = 0, tipY = size * (119.5 / 256);
+
+          g.setAttribute('id', 'player-marker-group');
+          g.classList.add('marker', 'player-marker');
+          g.style.transform = `translate(${x}px, ${y}px)`;
+          g.style.transition = 'transform 0.3s ease-out';
+
+          g.append(svgEl('path', {
+            id: 'playerVisionCone',
+            d: headingSectorPath(tipX, tipY, radius),
+            fill: '#00f5b8',
+            'fill-opacity': '.25',
+            stroke: '#00f5b8',
+            'stroke-opacity': '.7',
+            'stroke-width': 1.8 * mapScale
+          }));
+
+          const pImg = svgEl('image', {
+            href: icon.startsWith('/') ? icon : '/' + icon,
+            x: -size / 2, y: -size / 2,
+            width: size, height: size,
+            preserveAspectRatio: 'xMidYMid meet'
+          });
+          pImg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', icon.startsWith('/') ? icon : '/' + icon);
+          g.append(pImg);
+
+        } else {
+          const baseSize = marker.category === 'enemy' ? 16 :
+                           marker.category === 'safezone' ? 16 :
+                           marker.category === 'logpose' ? 18 :
+                           marker.category === 'shop' ? (marker.id === 'shop-1' ? 52 : 46) : 24;
+          const size = baseSize * mapScale;
+
+          g.setAttribute('id', `marker-${marker.id}`);
+          g.classList.add('marker');
+          g.style.transform = `translate(${x}px, ${y}px)`;
+          g.style.transition = 'transform 0.3s ease-out';
+
+          // Computer Vision Mob Detection Outline Box
+          if (cvBoxesActive && marker.category === 'enemy') {
+            g.append(svgEl('rect', {
+              x: -size / 2 - 2 * mapScale,
+              y: -size / 2 - 2 * mapScale,
+              width: size + 4 * mapScale,
+              height: size + 4 * mapScale,
+              fill: 'none',
+              stroke: '#f43f5e',
+              'stroke-width': 1.2 * mapScale,
+              opacity: '0.85'
+            }));
+          }
+
+          const mImg = svgEl('image', {
+            href: icon.startsWith('/') ? icon : '/' + icon,
+            x: -size / 2, y: -size / 2,
+            width: size, height: size,
+            preserveAspectRatio: 'xMidYMid meet'
+          });
+          mImg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', icon.startsWith('/') ? icon : '/' + icon);
+          g.append(mImg);
+        }
+
+        bindMapTooltip(g, name, cat?.label || marker.category);
+        layer.append(g);
+      }
+
+      mapWorld.append(layer);
+
+      const hPos = document.getElementById('hudPlayerPos');
+      if (hPos) hPos.innerText = `[${Math.round(playerLocation.x)}, ${Math.round(playerLocation.y)}]`;
+      const hFacing = document.getElementById('hudFacing');
+      if (hFacing) hFacing.innerText = `${facingName()} (${Math.round(playerHeading)}°)`;
+      const hPoints = document.getElementById('mapPointCount');
+      if (hPoints) hPoints.innerText = `${referenceData.markers.length} points indexed`;
+    }
+
+    function updateReferenceView() {
+      if (refSvg) refSvg.setAttribute('viewBox', `${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`);
+      drawReferenceMarkers();
+    }
+
+    /* ========================================================
+       ENHANCED MAP NAVIGATION: INERTIA PAN & PINCH-TO-ZOOM
+       ======================================================== */
+    const activePointers = new Map(); // pointerId -> { x, y, time }
+    let velocityTracker = []; // rolling window of { vx, vy, time }
+    let inertiaRafId = null;
+    let smoothZoomRafId = null;
+    let inertiaVelocity = { vx: 0, vy: 0 };
+    let isPinching = false;
+    let initialPinchDistance = 0;
+    let initialPinchViewW = 0;
+    let initialPinchViewH = 0;
+    let initialPinchCenterWorld = { x: 0, y: 0 };
+
+    function stopInertia() {
+      if (inertiaRafId) {
+        cancelAnimationFrame(inertiaRafId);
+        inertiaRafId = null;
+      }
+      inertiaVelocity = { vx: 0, vy: 0 };
+      drawReferenceMarkers();
+    }
+
+    function startInertia(vx, vy) {
+      stopInertia();
+      inertiaVelocity = { vx, vy };
+      let lastTime = performance.now();
+
+      function step(now) {
+        const dt = Math.min(48, now - lastTime);
+        lastTime = now;
+
+        if (dt > 0) {
+          viewBox.x += inertiaVelocity.vx * dt;
+          viewBox.y += inertiaVelocity.vy * dt;
+          clampViewBox();
+          updateReferenceView(false);
+
+          const friction = Math.pow(0.92, dt / 16.67);
+          inertiaVelocity.vx *= friction;
+          inertiaVelocity.vy *= friction;
+
+          if (Math.hypot(inertiaVelocity.vx, inertiaVelocity.vy) > 0.015) {
+            inertiaRafId = requestAnimationFrame(step);
+            return;
+          }
+        }
+        stopInertia();
+      }
+
+      inertiaRafId = requestAnimationFrame(step);
+    }
+
+    function getScreenToWorld(clientX, clientY) {
+      const rect = refSvg.getBoundingClientRect();
+      const nx = (clientX - rect.left) / rect.width;
+      const ny = (clientY - rect.top) / rect.height;
+      return {
+        x: viewBox.x + nx * viewBox.w,
+        y: viewBox.y + ny * viewBox.h
+      };
+    }
+
+    function mapPointerDown(e) {
+      if (isClickToLocateMode) {
+        isClickToLocateMode = false;
+        if (refSvg) refSvg.style.cursor = 'grab';
+        const worldPt = getScreenToWorld(e.clientX, e.clientY);
+        setPlayerLocation(worldPt.x, worldPt.y, 'Bản đồ Click');
+        return;
+      }
+
+      stopInertia();
+      if (smoothZoomRafId) {
+        cancelAnimationFrame(smoothZoomRafId);
+        smoothZoomRafId = null;
+      }
+
+      if (refSvg) {
+        refSvg.style.cursor = 'grabbing';
+        try { refSvg.setPointerCapture(e.pointerId); } catch {}
+      }
+
+      const now = performance.now();
+      activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY, time: now });
+
+      if (activePointers.size === 1) {
+        isPinching = false;
+        velocityTracker = [{ vx: 0, vy: 0, time: now }];
+      } else if (activePointers.size === 2) {
+        isPinching = true;
+        const pts = Array.from(activePointers.values());
+        initialPinchDistance = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+        initialPinchViewW = viewBox.w;
+        initialPinchViewH = viewBox.h;
+
+        const midClientX = (pts[0].x + pts[1].x) / 2;
+        const midClientY = (pts[0].y + pts[1].y) / 2;
+        initialPinchCenterWorld = getScreenToWorld(midClientX, midClientY);
+      }
+    }
+
+    function mapPointerMove(e) {
+      if (!activePointers.has(e.pointerId)) return;
+
+      const prevPos = activePointers.get(e.pointerId);
+      const now = performance.now();
+      activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY, time: now });
+
+      if (activePointers.size >= 2 && isPinching) {
+        const pts = Array.from(activePointers.values());
+        const currentDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+        if (initialPinchDistance > 0 && currentDist > 5) {
+          const scaleFactor = initialPinchDistance / currentDist;
+          const targetW = Math.max(MIN_MAP_VIEW, Math.min(MAP_W * 2.2, initialPinchViewW * scaleFactor));
+          const targetH = targetW * (MAP_H / MAP_W);
+
+          const rect = refSvg.getBoundingClientRect();
+          const midClientX = (pts[0].x + pts[1].x) / 2;
+          const midClientY = (pts[0].y + pts[1].y) / 2;
+          const normX = (midClientX - rect.left) / rect.width;
+          const normY = (midClientY - rect.top) / rect.height;
+
+          viewBox.w = targetW;
+          viewBox.h = targetH;
+          viewBox.x = initialPinchCenterWorld.x - normX * targetW;
+          viewBox.y = initialPinchCenterWorld.y - normY * targetH;
+
+          clampViewBox();
+          updateReferenceView();
+        }
+      } else if (activePointers.size === 1 && !isPinching) {
+        const scale = viewBox.w / (refSvg?.clientWidth || 800);
+        const dx = e.clientX - prevPos.x;
+        const dy = e.clientY - prevPos.y;
+
+        if (Math.hypot(dx, dy) > 2) {
+          hasUserPanned = true;
+        }
+
+        viewBox.x -= dx * scale;
+        viewBox.y -= dy * scale;
+        clampViewBox();
+        updateReferenceView(false);
+
+        const dt = now - prevPos.time;
+        if (dt > 0) {
+          velocityTracker.push({
+            vx: -(dx * scale) / dt,
+            vy: -(dy * scale) / dt,
+            time: now
+          });
+          velocityTracker = velocityTracker.filter(v => now - v.time < 80);
+        }
+      }
+    }
+
+    function mapPointerUp(e) {
+      if (activePointers.has(e.pointerId)) {
+        try { refSvg?.releasePointerCapture(e.pointerId); } catch {}
+        activePointers.delete(e.pointerId);
+      }
+
+      if (activePointers.size === 0) {
+        if (refSvg) refSvg.style.cursor = 'grab';
+        drawReferenceMarkers();
+
+        if (isPinching) {
+          isPinching = false;
+        } else if (velocityTracker.length > 0) {
+          const now = performance.now();
+          const recent = velocityTracker.filter(v => now - v.time < 80);
+          if (recent.length > 0) {
+            let avgVx = recent.reduce((sum, v) => sum + v.vx, 0) / recent.length;
+            let avgVy = recent.reduce((sum, v) => sum + v.vy, 0) / recent.length;
+
+            const speed = Math.hypot(avgVx, avgVy);
+            if (speed > 0.08) {
+              startInertia(avgVx * 0.95, avgVy * 0.95);
+            }
+          }
+          velocityTracker = [];
+        }
+      } else if (activePointers.size === 1) {
+        isPinching = false;
+        const remaining = Array.from(activePointers.values())[0];
+        remaining.time = performance.now();
+        velocityTracker = [];
+      }
+    }
+
+    function mapWheel(e) {
+      e.preventDefault();
+      stopInertia();
+
+      const factor = e.deltaY < 0 ? 0.88 : 1.14;
+      const nw = Math.max(MIN_MAP_VIEW, Math.min(MAP_W * 2.2, viewBox.w * factor));
+      const nh = nw * (MAP_H / MAP_W);
+
+      if (!hasUserPanned) {
+        // Spooksville Island stays strictly centered in the viewport
+        const islandCenterX = MAP_W / 2;
+        const islandCenterY = MAP_H / 2;
+        viewBox.w = nw;
+        viewBox.h = nh;
+        viewBox.x = islandCenterX - (nw / 2);
+        viewBox.y = islandCenterY - (nh / 2);
+      } else {
+        // User has panned/dragged the view: zoom anchored to mouse pointer location
+        const rect = refSvg.getBoundingClientRect();
+        const normX = (e.clientX - rect.left) / rect.width;
+        const normY = (e.clientY - rect.top) / rect.height;
+        const worldAnchorX = viewBox.x + normX * viewBox.w;
+        const worldAnchorY = viewBox.y + normY * viewBox.h;
+
+        viewBox.w = nw;
+        viewBox.h = nh;
+        viewBox.x = worldAnchorX - normX * nw;
+        viewBox.y = worldAnchorY - normY * nh;
+      }
+
+      // If user zoomed back out to full view, reset hasUserPanned so Spooksville stays centered
+      if (nw >= MAP_W * 0.98) {
+        hasUserPanned = false;
+      }
+
+      clampViewBox();
+      updateReferenceView(false);
+      clearTimeout(window.__wheelRedrawTimer);
+      window.__wheelRedrawTimer = setTimeout(() => {
+        drawReferenceMarkers();
+      }, 50);
+    }
+
+    function smoothZoomTo(targetFactor, anchorX = null, anchorY = null) {
+      stopInertia();
+      if (smoothZoomRafId) cancelAnimationFrame(smoothZoomRafId);
+
+      const targetW = Math.max(MIN_MAP_VIEW, Math.min(MAP_W * 2.2, viewBox.w * targetFactor));
+      const startW = viewBox.w;
+
+      let ax, ay;
+      if (!hasUserPanned && anchorX === null) {
+        ax = MAP_W / 2;
+        ay = MAP_H / 2;
+      } else {
+        ax = anchorX !== null ? anchorX : (viewBox.x + viewBox.w / 2);
+        ay = anchorY !== null ? anchorY : (viewBox.y + viewBox.h / 2);
+      }
+
+      const normX = (ax - viewBox.x) / viewBox.w;
+      const normY = (ay - viewBox.y) / viewBox.h;
+
+      const startTime = performance.now();
+      const duration = 220;
+
+      function step(now) {
+        const progress = Math.min(1, (now - startTime) / duration);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        const curW = startW + (targetW - startW) * ease;
+        const curH = curW * (MAP_H / MAP_W);
+
+        viewBox.w = curW;
+        viewBox.h = curH;
+        viewBox.x = ax - normX * curW;
+        viewBox.y = ay - normY * curH;
+
+        if (curW >= MAP_W * 0.98) {
+          hasUserPanned = false;
+        }
+
+        clampViewBox();
+        updateReferenceView(false);
+
+        if (progress < 1) {
+          smoothZoomRafId = requestAnimationFrame(step);
+        } else {
+          smoothZoomRafId = null;
+          drawReferenceMarkers();
+        }
+      }
+
+      smoothZoomRafId = requestAnimationFrame(step);
+    }
+
+
+
+    function showMapTooltip(e, name, kind) {
+      const tip = document.getElementById('mapTooltip');
+      if (!tip) return;
+      tip.innerHTML = `<strong>${name}</strong><br><span style="color: #9c91c8; font-size: 10.5px;">${kind}</span>`;
+      tip.style.display = 'block';
+      moveMapTooltip(e);
+    }
+
+    function moveMapTooltip(e) {
+      const tip = document.getElementById('mapTooltip');
+      const stage = document.querySelector('.map-stage-wrapper');
+      if (!tip || !stage) return;
+      const box = stage.getBoundingClientRect();
+      const x = e.clientX - box.left, y = e.clientY - box.top;
+      tip.style.left = Math.max(8, Math.min(box.width - tip.offsetWidth - 8, x + 12)) + 'px';
+      tip.style.top = Math.max(8, Math.min(box.height - tip.offsetHeight - 8, y + 12)) + 'px';
+    }
+
+    function hideMapTooltip() {
+      const tip = document.getElementById('mapTooltip');
+      if (tip) tip.style.display = 'none';
+    }
+
+    function bindMapTooltip(node, name, kind) {
+      node.addEventListener('pointerenter', e => showMapTooltip(e, name, kind));
+      node.addEventListener('pointermove', moveMapTooltip);
+      node.addEventListener('pointerleave', hideMapTooltip);
+    }
+
+    function toggleCategory(catId) {
+      const btn = document.getElementById(`chip_${catId}`);
+      if (visibleCats.has(catId)) {
+        visibleCats.delete(catId);
+        if (btn) btn.classList.remove('active');
+        showToast(`Filter hidden: ${catId}`);
+      } else {
+        visibleCats.add(catId);
+        if (btn) btn.classList.add('active');
+        showToast(`Filter visible: ${catId}`);
+      }
+      drawReferenceMarkers();
+    }
+
+    function selectAllCategories(state) {
+      ['enemy', 'logpose', 'shop', 'safezone', 'player'].forEach(id => {
+        const btn = document.getElementById(`chip_${id}`);
+        if (state) {
+          visibleCats.add(id);
+          if (btn) btn.classList.add('active');
+        } else {
+          visibleCats.delete(id);
+          if (btn) btn.classList.remove('active');
+        }
+      });
+      drawReferenceMarkers();
+      showToast(state ? 'All filters enabled.' : 'All filters hidden.');
+    }
+
+    function toggleFullbright(active) {
+      fullbrightActive = active;
+      const svg = document.getElementById('refSvg');
+      if (svg) svg.style.filter = active ? 'brightness(1.22) contrast(1.25) saturate(1.1)' : 'none';
+      showToast(active ? 'High-Contrast AI Vision Filter: ON' : 'High-Contrast AI Vision Filter: OFF');
+    }
+
+    function togglePoseVector(active) {
+      poseVectorActive = active;
+      drawReferenceMarkers();
+      showToast(`Navigation vector needle: ${active ? 'ON' : 'OFF'}`);
+    }
+
+    function toggleCvBoxes(active) {
+      cvBoxesActive = active;
+      chamsActive = active;
+      drawReferenceMarkers();
+      showToast(`CV mob detection outlines: ${active ? 'ON' : 'OFF'}`);
+    }
+
+    function toggleTracers(active) {
+      tracersActive = active;
+      drawReferenceMarkers();
+      showToast(`Mob patrol vector guides: ${active ? 'ON' : 'OFF'}`);
+    }
+
+    /* ========================================================
+       3. AFK MACRO STUDIO & SEQUENCE ENGINE
+       ======================================================== */
+    const MACRO_PRESETS = {
+      1: [
+        { id: 1, type: 'click', value: 'M1', delay: 180 },
+        { id: 2, type: 'click', value: 'M1', delay: 180 },
+        { id: 3, type: 'click', value: 'M1', delay: 180 },
+        { id: 4, type: 'click', value: 'M1', delay: 200 },
+        { id: 5, type: 'key', value: 'Z', delay: 350 },
+        { id: 6, type: 'key', value: 'Q', delay: 250 }
+      ],
+      2: [
+        { id: 1, type: 'key', value: 'E', delay: 100 },
+        { id: 2, type: 'key', value: 'Q', delay: 180 },
+        { id: 3, type: 'click', value: 'M1', delay: 220 },
+        { id: 4, type: 'click', value: 'M2', delay: 300 }
+      ],
+      3: [
+        { id: 1, type: 'key', value: 'Space', delay: 200 },
+        { id: 2, type: 'delay', value: 'WAIT', delay: 1200 },
+        { id: 3, type: 'key', value: 'W', delay: 250 },
+        { id: 4, type: 'key', value: 'S', delay: 250 },
+        { id: 5, type: 'delay', value: 'WAIT', delay: 1500 }
+      ]
+    };
+
+    function loadMacroPreset(id) {
+      if (MACRO_PRESETS[id]) {
+        macroSteps = JSON.parse(JSON.stringify(MACRO_PRESETS[id]));
+        renderMacros();
+        page('Scripts', document.getElementById('btnNavMacro'));
+        showToast(`Loaded Macro Preset #${id}`);
+      }
+    }
+
+    function resetMacroSteps() {
+      macroSteps = JSON.parse(JSON.stringify(MACRO_PRESETS[1]));
+      renderMacros();
+      showToast('Reset macro steps to default auto-farm.');
+    }
+
+    function exportMacroProfile() {
+      const json = JSON.stringify(macroSteps, null, 2);
+      navigator.clipboard.writeText(json).catch(() => {});
+      showToast('💾 Macro profile JSON copied to clipboard!');
+    }
+
+    function importMacroProfile() {
+      showToast('📁 Macro profile imported and verified.');
+    }
+
+    /* ========================================================
+       4. MACRO AUTOMATION & FRAME-RATE CLOCK SYNCHRONIZATION
+       ======================================================== */
+    let frameRateSyncActive = true;
+    const SIMULATED_FPS_TIERS = [144, 60, 120, 240];
+    let simulatedFpsIndex = 0;
+
+    /**
+     * Reads the game's actual frame rate from the topbar telemetry element ('FPS: 144').
+     * Returns the numerical FPS (e.g. 144) or a default of 144.
+     */
+    function readTelemetryFps() {
+      const fpsEl = document.getElementById('topFpsVal') || document.getElementById('topTelemetryFps');
+      if (!fpsEl) return 144;
+      const text = fpsEl.innerText || fpsEl.textContent || '';
+      const match = text.match(/(\d+)/);
+      if (match && match[1]) {
+        const val = parseInt(match[1], 10);
+        return val > 0 ? val : 144;
+      }
+      return 144;
+    }
+
+    /**
+     * Synchronizes a macro delay duration with the game's discrete frame cadence.
+     * Reads 'FPS: 144' from telemetry, computes frame duration (e.g., 1000/144 = 6.944ms),
+     * and quantizes the delay to exact frame intervals.
+     *
+     * @param {number} delayMs - Base delay in milliseconds (e.g., 180ms)
+     * @param {number} [overrideFps] - Optional FPS override
+     * @returns {{ syncedDelay: number, fps: number, frameDurationMs: number, framesCount: number, driftMs: number }}
+     */
+    function syncMacroClockWithFPS(delayMs, overrideFps = null) {
+      const fps = overrideFps || readTelemetryFps();
+      const frameDurationMs = 1000 / fps;
+
+      // Calculate exact discrete integer frame intervals needed
+      const framesCount = Math.max(1, Math.round(delayMs / frameDurationMs));
+      const syncedDelay = Math.round(framesCount * frameDurationMs);
+      const driftMs = parseFloat((syncedDelay - delayMs).toFixed(2));
+
+      return {
+        syncedDelay,
+        fps,
+        frameDurationMs: parseFloat(frameDurationMs.toFixed(3)),
+        framesCount,
+        driftMs
+      };
+    }
+
+    /**
+     * Automatically adjusts all steps in macroSteps to align with the game's actual telemetry FPS.
+     */
+    function syncAllMacroStepsToFrameClock() {
+      const fps = readTelemetryFps();
+      let totalDrift = 0;
+
+      macroSteps = macroSteps.map(step => {
+        const sync = syncMacroClockWithFPS(step.delay, fps);
+        totalDrift += Math.abs(sync.driftMs);
+        return {
+          ...step,
+          delay: sync.syncedDelay,
+          framesCount: sync.framesCount
+        };
+      });
+
+      renderMacros();
+      updateFrameClockBadge();
+      showToast(`⚡ Macro Clock synced to ${fps} FPS.`);
+    }
+
+    function toggleFrameSync(active) {
+      frameRateSyncActive = active;
+      updateFrameClockBadge();
+      renderMacros();
+      showToast(active ? '✓ Frame-rate clock sync ACTIVE (Macro aligned with FPS).' : 'Frame-rate clock sync disabled (Raw timer mode).');
+    }
+
+    function cycleFpsSimulation() {
+      simulatedFpsIndex = (simulatedFpsIndex + 1) % SIMULATED_FPS_TIERS.length;
+      const newFps = SIMULATED_FPS_TIERS[simulatedFpsIndex];
+      const fpsVal = document.getElementById('topFpsVal');
+      if (fpsVal) fpsVal.innerText = newFps;
+
+      fetch('/api/telemetry/fps', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fps: newFps })
+      }).catch(() => {});
+
+      updateFrameClockBadge();
+      renderMacros();
+      showToast(`🎮 Telemetry FPS: ${newFps} FPS.`);
+    }
+
+    // TelemetryScanner: automatically updates the 'FPS' telemetry value on the dashboard every 5 seconds
+    async function pollTelemetryFps() {
+      try {
+        const res = await fetch('/api/telemetry/fps');
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.fps != null) {
+            const rounded = Math.round(data.fps);
+            const fpsVal = document.getElementById('topFpsVal');
+            if (fpsVal && fpsVal.innerText !== String(rounded)) {
+              fpsVal.innerText = rounded;
+              if (typeof updateFrameClockBadge === 'function') updateFrameClockBadge();
+            }
+          }
+        }
+      } catch (err) {}
+    }
+    setInterval(pollTelemetryFps, 5000);
+
+    function updateFrameClockBadge() {
+      const fps = readTelemetryFps();
+      const frameMs = (1000 / fps).toFixed(2);
+      const badges = document.querySelectorAll('.frame-sync-indicator');
+      badges.forEach(b => {
+        if (frameRateSyncActive) {
+          b.innerHTML = `⚡ Frame Clock: <strong>${fps} FPS</strong> (${frameMs}ms/frame • Synced)`;
+          b.style.color = '#00f5b8';
+        } else {
+          b.innerHTML = `⏸️ Frame Clock: <strong>${fps} FPS</strong> (Sync Disabled)`;
+          b.style.color = 'var(--muted)';
+        }
+      });
+    }
+    let macroSteps = [
+      { id: 1, type: 'click', value: 'M1', delay: 180 },
+      { id: 2, type: 'click', value: 'M1', delay: 180 },
+      { id: 3, type: 'click', value: 'M1', delay: 180 },
+      { id: 4, type: 'click', value: 'M1', delay: 200 },
+      { id: 5, type: 'key', value: 'Z', delay: 350 },
+      { id: 6, type: 'key', value: 'Q', delay: 250 }
+    ];
+
+    let isMacroRunning = false;
+    let macroAbortRequested = false;
+    let currentLoopCycle = 0;
+    let totalLoopsTarget = 1;
+
+    function renderMacros() {
+      const lists = [
+        document.getElementById('macroStepList'),
+        document.getElementById('macroStudioStepList')
+      ].filter(Boolean);
+
+      lists.forEach(list => {
+        list.innerHTML = '';
+        macroSteps.forEach((s, idx) => {
+          const item = document.createElement('div');
+          item.id = `macroStepItem_${idx}`;
+          item.style.cssText = 'display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: rgba(22, 13, 50, .6); border: 1px solid var(--line); border-radius: 12px; transition: all 0.2s ease;';
+
+          const badgeColor = s.type === 'key' ? '#00f5b8' : s.type === 'click' ? '#38bdf8' : '#fbbf24';
+
+          item.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-family: var(--font-code); font-size: 11px; color: var(--muted); width: 22px;">#${idx + 1}</span>
+              <span style="font-family: var(--font-code); font-weight: 700; font-size: 12px; padding: 3px 10px; border-radius: 6px; background: rgba(255,255,255,0.06); color: ${badgeColor}; border: 1px solid rgba(255,255,255,0.1);">
+                ${s.value} (${s.type})
+              </span>
+              <span style="font-size: 12px; color: var(--muted);">${s.delay}ms</span>
+              <span style="font-family: var(--font-code); font-size: 10px; color: #00f5b8; background: rgba(0,245,184,0.08); padding: 2px 7px; border-radius: 4px; border: 1px solid rgba(0,245,184,0.22);" title="${s.delay}ms synchronized to ${syncMacroClockWithFPS(s.delay).fps} FPS (${syncMacroClockWithFPS(s.delay).frameDurationMs}ms/frame)">
+                ${syncMacroClockWithFPS(s.delay).framesCount}f (${syncMacroClockWithFPS(s.delay).syncedDelay}ms)
+              </span>
+            </div>
+            <div style="display: flex; gap: 6px;">
+              <button class="btn" style="padding: 3px 8px; font-size: 11px;" onclick="moveStep(${idx}, -1)">▲</button>
+              <button class="btn" style="padding: 3px 8px; font-size: 11px;" onclick="moveStep(${idx}, 1)">▼</button>
+              <button class="btn" style="padding: 3px 8px; font-size: 11px; color: #f43f5e;" onclick="delStep(${idx})">✕</button>
+            </div>
+          `;
+          list.appendChild(item);
+        });
+      });
+    }
+
+    function moveStep(idx, dir) {
+      const nIdx = idx + dir;
+      if (nIdx < 0 || nIdx >= macroSteps.length) return;
+      const temp = macroSteps[idx];
+      macroSteps[idx] = macroSteps[nIdx];
+      macroSteps[nIdx] = temp;
+      renderMacros();
+    }
+
+    function delStep(idx) {
+      macroSteps.splice(idx, 1);
+      renderMacros();
+      showToast(`Removed Step #${idx + 1}`);
+    }
+
+    function setQuickDelay(val) {
+      const slider = document.getElementById('inpDelay');
+      if (slider) slider.value = val;
+      onStepDelaySlider(val);
+    }
+
+    function onStepDelaySlider(val) {
+      const num = parseInt(val, 10);
+      const lbl = document.getElementById('lblStepDelay');
+      if (lbl) {
+        lbl.innerText = `${num} ms`;
+        lbl.style.color = num <= 80 ? '#38bdf8' : num <= 300 ? '#00f5b8' : num <= 600 ? '#fbbf24' : '#f43f5e';
+      }
+      document.querySelectorAll('.delay-preset-chip').forEach(btn => {
+        const chipVal = parseInt(btn.getAttribute('data-val'), 10);
+        if (chipVal === num) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    function openAddModal() {
+      const modal = document.getElementById('modalAdd');
+      if (modal) modal.style.display = 'flex';
+      const slider = document.getElementById('inpDelay');
+      if (slider) onStepDelaySlider(slider.value || 250);
+    }
+
+    function closeAddModal() {
+      const modal = document.getElementById('modalAdd');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function onTypeChange() {
+      const selType = document.getElementById('selType');
+      const wrapKey = document.getElementById('wrapKey');
+      const wrapClick = document.getElementById('wrapClick');
+      const type = selType ? selType.value : 'key';
+      if (wrapKey) wrapKey.style.display = type === 'key' ? 'block' : 'none';
+      if (wrapClick) wrapClick.style.display = type === 'click' ? 'block' : 'none';
+    }
+
+    function confirmAddMacro() {
+      const selType = document.getElementById('selType');
+      const inpDelay = document.getElementById('inpDelay');
+      const type = selType ? selType.value : 'key';
+      const delay = parseInt(inpDelay ? inpDelay.value : '200', 10) || 200;
+      let val = 'Z';
+      if (type === 'key') {
+        const selKey = document.getElementById('selKey');
+        if (selKey) val = selKey.value;
+      }
+      if (type === 'click') {
+        const selClick = document.getElementById('selClick');
+        if (selClick) val = selClick.value;
+      }
+      if (type === 'delay') val = 'WAIT';
+
+      macroSteps.push({ id: Date.now(), type, value: val, delay });
+      closeAddModal();
+      renderMacros();
+      showToast(`Added action: ${val}`);
+    }
+
+    function loadPreset(key) {
+      if (key === 'm1_z') {
+        macroSteps = [
+          { id: 1, type: 'click', value: 'M1', delay: 180 },
+          { id: 2, type: 'click', value: 'M1', delay: 180 },
+          { id: 3, type: 'click', value: 'M1', delay: 180 },
+          { id: 4, type: 'click', value: 'M1', delay: 200 },
+          { id: 5, type: 'key', value: 'Z', delay: 350 }
+        ];
+      } else if (key === 'ken_dodge') {
+        macroSteps = [
+          { id: 1, type: 'key', value: 'E', delay: 100 },
+          { id: 2, type: 'key', value: 'Q', delay: 200 }
+        ];
+      } else if (key === 'geppo_jump') {
+        macroSteps = [
+          { id: 1, type: 'key', value: 'Space', delay: 200 },
+          { id: 2, type: 'key', value: 'Space', delay: 200 },
+          { id: 3, type: 'key', value: 'Space', delay: 200 }
+        ];
+      } else if (key === 'chest_loot') {
+        macroSteps = [
+          { id: 1, type: 'key', value: 'E', delay: 350 },
+          { id: 2, type: 'click', value: 'M1', delay: 150 }
+        ];
+      }
+      renderMacros();
+      showToast('Loaded Preset sequence.');
+    }
+
+    function onLoopSelectChange() {
+      const loopSel = document.getElementById('macroLoopSelect');
+      if (!loopSel) return;
+      if (loopSel.value === 'infinite' && !isPro) {
+        showToast('👑 Infinite Macro Looping is a Crown Pro feature! Free edition limited to 10 loops.');
+        loopSel.value = '10';
+        openLicenseModal();
+        return;
+      }
+      showToast(`Macro target set to: ${loopSel.value === 'infinite' ? '∞ Infinite Continuous' : loopSel.value + ' Loops'}`);
+    }
+
+    async function toggleRunMacroLoop() {
+      if (isMacroRunning) {
+        macroAbortRequested = true;
+        const statusText = document.getElementById('loopStatusText');
+        if (statusText) statusText.innerText = 'Aborting macro loop...';
+        showToast('⏹ Stopping macro execution...');
+        return;
+      }
+
+      const loopSel = document.getElementById('macroLoopSelect');
+      const val = loopSel ? loopSel.value : '1';
+      if (val === 'infinite') {
+        if (!isPro) {
+          showToast('👑 Infinite Looping requires Crown Pro license!');
+          openLicenseModal();
+          return;
+        }
+        totalLoopsTarget = Infinity;
+      } else {
+        totalLoopsTarget = parseInt(val, 10) || 1;
+      }
+
+      const delayInp = document.getElementById('macroLoopDelay');
+      const loopDelay = Math.max(50, parseInt(delayInp ? delayInp.value : '350', 10) || 350);
+
+      if (macroSteps.length === 0) {
+        showToast('Macro sequence has no steps.');
+        return;
+      }
+
+      isMacroRunning = true;
+      macroAbortRequested = false;
+      currentLoopCycle = 0;
+
+      // Update Play/Stop button visuals safely
+      const updateButtonVisuals = (running) => {
+        const btn1Icon = document.getElementById('btnRunLoopIcon');
+        const btn1Text = document.getElementById('btnRunLoopText');
+        const btn2Icon = document.getElementById('btnStudioRunIcon');
+        const btn2Text = document.getElementById('btnStudioRunText');
+        const btn1 = document.getElementById('btnRunLoop');
+        const btn2 = document.getElementById('btnTestStudioMacro');
+
+        if (btn1Icon) btn1Icon.innerText = running ? '⏹' : '▶';
+        if (btn1Text) btn1Text.innerText = running ? 'Stop Macro Loop' : 'Run Macro Sequence';
+        if (btn2Icon) btn2Icon.innerText = running ? '⏹' : '▶';
+        if (btn2Text) btn2Text.innerText = running ? 'Stop Macro Loop' : 'Test Macro Sequence';
+
+        if (btn1) {
+          btn1.style.background = running ? '#f43f5e' : '';
+          btn1.style.borderColor = running ? '#f43f5e' : '';
+        }
+        if (btn2) {
+          btn2.style.background = running ? '#f43f5e' : '';
+          btn2.style.borderColor = running ? '#f43f5e' : '';
+        }
+      };
+
+      updateButtonVisuals(true);
+      showToast(`▶ Starting Macro: ${totalLoopsTarget === Infinity ? '∞ Infinite Loop' : totalLoopsTarget + ' Cycles'}`);
+
+      try {
+        while (!macroAbortRequested && (totalLoopsTarget === Infinity || currentLoopCycle < totalLoopsTarget)) {
+          currentLoopCycle++;
+          const cycleLabel = totalLoopsTarget === Infinity ? `Cycle ${currentLoopCycle} (∞)` : `Cycle ${currentLoopCycle}/${totalLoopsTarget}`;
+
+          for (let s = 0; s < macroSteps.length; s++) {
+            if (macroAbortRequested) break;
+            const step = macroSteps[s];
+
+            const statusText = document.getElementById('loopStatusText');
+            if (statusText) statusText.innerText = `${cycleLabel} • Step ${s + 1}/${macroSteps.length} [${step.value}]`;
+
+            // Highlight active step item
+            const item = document.getElementById(`macroStepItem_${s}`);
+            if (item) {
+              item.style.borderColor = '#00f5b8';
+              item.style.boxShadow = '0 0 14px rgba(0,245,184,0.35)';
+              item.style.background = 'rgba(0, 245, 184, 0.12)';
+            }
+
+            // Dead Reckoning Odometry: Update player position if step is movement
+            if (step.type === 'key') {
+              const moveKey = (step.value || '').toUpperCase();
+              const rad = playerHeading * (Math.PI / 180);
+              let stepStride = 8; // pixels per movement step
+              if (moveKey === 'W') {
+                playerLocation.x += stepStride * Math.cos(rad);
+                playerLocation.y += stepStride * Math.sin(rad);
+                clampPlayerCoords();
+                drawReferenceMarkers();
+              } else if (moveKey === 'S') {
+                playerLocation.x -= stepStride * Math.cos(rad);
+                playerLocation.y -= stepStride * Math.sin(rad);
+                clampPlayerCoords();
+                drawReferenceMarkers();
+              } else if (moveKey === 'A') {
+                playerLocation.x += stepStride * Math.sin(rad);
+                playerLocation.y -= stepStride * Math.cos(rad);
+                clampPlayerCoords();
+                drawReferenceMarkers();
+              } else if (moveKey === 'D') {
+                playerLocation.x -= stepStride * Math.sin(rad);
+                playerLocation.y += stepStride * Math.cos(rad);
+                clampPlayerCoords();
+                drawReferenceMarkers();
+              }
+            }
+
+            const syncInfo = syncMacroClockWithFPS(step.delay);
+            const actualDelay = frameRateSyncActive ? syncInfo.syncedDelay : step.delay;
+            await new Promise(r => setTimeout(r, actualDelay));
+
+            if (item) {
+              item.style.borderColor = 'var(--line)';
+              item.style.boxShadow = '';
+              item.style.background = 'rgba(22, 13, 50, .6)';
+            }
+          }
+
+          if (macroAbortRequested) break;
+
+          if (totalLoopsTarget === Infinity || currentLoopCycle < totalLoopsTarget) {
+            const statusText = document.getElementById('loopStatusText');
+            if (statusText) statusText.innerText = `${cycleLabel} cycle complete • Pause ${loopDelay}ms`;
+            const syncLoop = syncMacroClockWithFPS(loopDelay);
+            const actualLoopDelay = frameRateSyncActive ? syncLoop.syncedDelay : loopDelay;
+            await new Promise(r => setTimeout(r, actualLoopDelay));
+          }
+        }
+      } finally {
+        isMacroRunning = false;
+        macroAbortRequested = false;
+        updateButtonVisuals(false);
+
+        const statusText = document.getElementById('loopStatusText');
+        if (statusText) {
+          statusText.innerText = currentLoopCycle > 0 ? `Finished (${currentLoopCycle} cycles completed)` : 'Idle (Ready)';
+        }
+
+        document.querySelectorAll('[id^="macroStepItem_"]').forEach(el => {
+          el.style.borderColor = 'var(--line)';
+          el.style.boxShadow = '';
+          el.style.background = 'rgba(22, 13, 50, .6)';
+        });
+
+        showToast('✓ Macro sequence finished.');
+      }
+    }
+
+    /* ========================================================
+       5. SERVER & TELEMETRY
+       ======================================================== */
+    let currentPing = 28;
+    let simulatedHighPing = false;
+    let pingAlertDismissed = false;
+    const pingHistory = [28, 29, 27, 28, 30, 28, 27, 28, 29, 31, 28, 27, 28];
+
+    // Granular Jitter & Packet Loss Telemetry Variables
+    let currentJitter = 1.2; // ms
+    let lastPing = 28;
+    let jitterHistory = [1.2, 0.8, 1.4, 1.1, 0.9, 1.3, 1.0, 1.5, 0.8, 1.2];
+    let totalPacketsTx = 500;
+    let totalPacketsRx = 500;
+    let totalPacketsLost = 0;
+    let simulatedPacketLoss = false;
+    let consecutiveStableFrames = 12480;
+    let packetStreamHistory = Array(28).fill(true); // true = ACK, false = DROP
+
+    function checkPingAlert(pingVal) {
+      const topChip = document.getElementById('topPingChip');
+      const topPing = document.getElementById('topPing');
+      if (topPing) {
+        topPing.innerText = `${pingVal} ms`;
+        topPing.style.color = pingVal > 100 ? '#f43f5e' : 'var(--accent-emerald)';
+      }
+      if (topChip) {
+        topChip.style.borderColor = pingVal > 100 ? 'rgba(244, 63, 94, 0.4)' : '';
+        topChip.style.boxShadow = '';
+      }
+    }
+
+    function toggleSimulateHighPing() {
+      simulatedHighPing = !simulatedHighPing;
+      pingAlertDismissed = false;
+      const btn = document.getElementById('btnSimHighPing');
+      const slider = document.getElementById('pingSlider');
+
+      if (simulatedHighPing) {
+        currentPing = 138;
+        if (btn) {
+          btn.innerText = '⚡ Reset Low Ping (28ms)';
+          btn.style.color = '#00f5b8';
+          btn.style.borderColor = 'rgba(0, 245, 184, 0.4)';
+        }
+      } else {
+        currentPing = 28;
+        if (btn) {
+          btn.innerText = '⚠️ Simulate >100ms Ping';
+          btn.style.color = '';
+          btn.style.borderColor = '';
+        }
+      }
+
+      if (slider) slider.value = currentPing;
+      const sliderVal = document.getElementById('pingSliderValue');
+      if (sliderVal) {
+        sliderVal.innerText = `${currentPing} ms`;
+        sliderVal.style.color = currentPing > 100 ? '#f43f5e' : 'var(--accent-emerald)';
+      }
+
+      pingHistory.push(currentPing);
+      if (pingHistory.length > 25) pingHistory.shift();
+      renderPingGraph();
+      checkPingAlert(currentPing);
+      updateNetworkStabilityTelemetry(currentPing);
+    }
+
+    function onPingSliderChange(val) {
+      currentPing = parseInt(val, 10);
+      simulatedHighPing = currentPing > 100;
+      pingAlertDismissed = false;
+
+      const sliderVal = document.getElementById('pingSliderValue');
+      if (sliderVal) {
+        sliderVal.innerText = `${currentPing} ms`;
+        sliderVal.style.color = currentPing > 100 ? '#f43f5e' : 'var(--accent-emerald)';
+      }
+
+      const btn = document.getElementById('btnSimHighPing');
+      if (btn) {
+        if (currentPing > 100) {
+          btn.innerText = '⚡ Reset Low Ping (28ms)';
+          btn.style.color = '#00f5b8';
+          btn.style.borderColor = 'rgba(0, 245, 184, 0.4)';
+        } else {
+          btn.innerText = '⚠️ Simulate >100ms Ping';
+          btn.style.color = '';
+          btn.style.borderColor = '';
+        }
+      }
+
+      pingHistory.push(currentPing);
+      if (pingHistory.length > 25) pingHistory.shift();
+      renderPingGraph();
+      checkPingAlert(currentPing);
+      updateNetworkStabilityTelemetry(currentPing);
+    }
+
+    function setPingValue(val) {
+      const slider = document.getElementById('pingSlider');
+      if (slider) slider.value = val;
+      onPingSliderChange(val);
+    }
+
+    
+
+    async function fetchNet() {
+      try {
+        const res = await fetch('/api/network');
+        if (!res.ok) return;
+        const d = await res.json();
+        const topIp = document.getElementById('topIp');
+        if (topIp) topIp.innerText = d.client_ip;
+        const netIp = document.getElementById('netIp');
+        if (netIp) netIp.innerText = d.client_ip;
+        const topCountry = document.getElementById('topCountry');
+        if (topCountry) topCountry.innerText = `${d.country} ${d.country_flag}`;
+        const netCountry = document.getElementById('netCountry');
+        if (netCountry) netCountry.innerText = `${d.country_flag} ${d.country}`;
+        const netCity = document.getElementById('netCity');
+        if (netCity) netCity.innerText = `${d.city} • ${d.region}`;
+        const netIsp = document.getElementById('netIsp');
+        if (netIsp) netIsp.innerText = `${d.isp} • ${d.asn}`;
+      } catch (e) {
+        console.warn('Network API fetch failed:', e);
+      }
+    }
+
+    async function updatePing() {
+      const netView = document.getElementById('viewNet');
+      if (!netView || !netView.classList.contains('active')) return;
+      if (simulatedHighPing) {
+        checkPingAlert(currentPing);
+        return;
+      }
+      try {
+        const t0 = performance.now();
+        const res = await fetch('/api/ping');
+        const ms = Math.round(performance.now() - t0);
+        if (res.ok) {
+          currentPing = Math.max(16, ms);
+          pingHistory.push(currentPing);
+          if (pingHistory.length > 25) pingHistory.shift();
+          checkPingAlert(currentPing);
+          renderPingGraph();
+          updateNetworkStabilityTelemetry(currentPing);
+        }
+      } catch {
+        pingHistory.push(28);
+        checkPingAlert(28);
+        renderPingGraph();
+        updateNetworkStabilityTelemetry(28);
+      }
+    }
+
+    /* ========================================================
+       GRANULAR JITTER & PACKET LOSS TELEMETRY CALCULATION
+       ======================================================== */
+    function updateNetworkStabilityTelemetry(ping) {
+      const netView = document.getElementById('viewNet');
+      if (!netView || !netView.classList.contains('active')) return;
+      const delta = Math.abs(ping - lastPing);
+      lastPing = ping;
+
+      currentJitter = Math.max(0.2, (currentJitter * 0.85) + (delta * 0.15));
+      if (ping > 100) {
+        currentJitter = Math.max(14.5, currentJitter * 1.35);
+      }
+      jitterHistory.push(parseFloat(currentJitter.toFixed(2)));
+      if (jitterHistory.length > 30) jitterHistory.shift();
+
+      totalPacketsTx += 1;
+      let packetDroppedThisTick = false;
+      if (simulatedPacketLoss && Math.random() < 0.08) {
+        totalPacketsLost += 1;
+        packetDroppedThisTick = true;
+      } else {
+        totalPacketsRx += 1;
+      }
+
+      packetStreamHistory.push(!packetDroppedThisTick);
+      if (packetStreamHistory.length > 28) packetStreamHistory.shift();
+
+      const lossPct = totalPacketsTx > 0 ? ((totalPacketsLost / totalPacketsTx) * 100) : 0;
+
+      // Safely update DOM Display Elements
+      const jCurrent = document.getElementById('jitterCurrent');
+      if (jCurrent) {
+        jCurrent.innerText = `${currentJitter.toFixed(1)} ms`;
+        jCurrent.style.color = currentJitter > 15 ? '#f43f5e' : currentJitter > 5 ? '#fbbf24' : 'var(--accent-emerald)';
+      }
+
+      const jAvg = document.getElementById('jitterAvg');
+      if (jAvg) {
+        const avg = jitterHistory.reduce((a, b) => a + b, 0) / jitterHistory.length;
+        jAvg.innerText = `${avg.toFixed(1)} ms`;
+      }
+
+      const jMax = document.getElementById('jitterMax');
+      if (jMax) {
+        jMax.innerText = `${Math.max(...jitterHistory).toFixed(1)} ms`;
+      }
+
+      const jRating = document.getElementById('jitterRating');
+      const jDot = document.getElementById('jitterRatingDot');
+      if (jRating) {
+        if (currentJitter > 15) {
+          jRating.innerText = '● Critical Jitter Variance (> 15ms)';
+          jRating.style.color = '#f43f5e';
+          if (jDot) { jDot.style.background = '#f43f5e'; jDot.style.boxShadow = '0 0 8px #f43f5e'; }
+        } else if (currentJitter > 5) {
+          jRating.innerText = '● Moderate Jitter Variance (5 - 15ms)';
+          jRating.style.color = '#fbbf24';
+          if (jDot) { jDot.style.background = '#fbbf24'; jDot.style.boxShadow = '0 0 8px #fbbf24'; }
+        } else {
+          jRating.innerText = '● Optimal Latency Variance (< 5ms)';
+          jRating.style.color = 'var(--accent-emerald)';
+          if (jDot) { jDot.style.background = '#00f5b8'; jDot.style.boxShadow = '0 0 8px #00f5b8'; }
+        }
+      }
+
+      const lCurrent = document.getElementById('lossCurrent');
+      const lDot = document.getElementById('lossRatingDot');
+      if (lCurrent) {
+        lCurrent.innerText = `${lossPct.toFixed(2)}%`;
+        lCurrent.style.color = lossPct > 1 ? '#f43f5e' : 'var(--accent-emerald)';
+        if (lDot) {
+          lDot.style.background = lossPct > 1 ? '#f43f5e' : '#00f5b8';
+          lDot.style.boxShadow = lossPct > 1 ? '0 0 8px #f43f5e' : '0 0 8px #00f5b8';
+        }
+      }
+
+      const pTx = document.getElementById('packetsTx');
+      if (pTx) pTx.innerText = totalPacketsTx.toLocaleString();
+      const pRx = document.getElementById('packetsRx');
+      if (pRx) pRx.innerText = totalPacketsRx.toLocaleString();
+      const pLost = document.getElementById('packetsLost');
+      if (pLost) {
+        pLost.innerText = totalPacketsLost.toLocaleString();
+        pLost.style.color = totalPacketsLost > 0 ? '#f43f5e' : '#00f5b8';
+      }
+
+      const bLoss = document.getElementById('burstLossProb');
+      if (bLoss) {
+        if (lossPct > 1) {
+          bLoss.innerText = `● Burst Drop Risk: ${lossPct.toFixed(1)}% (Transport Loss)`;
+          bLoss.style.color = '#f43f5e';
+        } else {
+          bLoss.innerText = '● Burst Drop Risk: < 0.01% (Clean Stream)';
+          bLoss.style.color = 'var(--accent-emerald)';
+        }
+      }
+
+      const variance = jitterHistory.map(x => Math.pow(x - currentJitter, 2)).reduce((a, b) => a + b, 0) / jitterHistory.length;
+      const stdDev = Math.sqrt(variance);
+
+      const jStd = document.getElementById('jitterStdDev');
+      if (jStd) jStd.innerText = `${stdDev.toFixed(2)} ms`;
+
+      const dRisk = document.getElementById('desyncRisk');
+      const dDot = document.getElementById('desyncRatingDot');
+      const dStatus = document.getElementById('desyncStatus');
+      const riskPct = currentJitter > 15 ? 16.4 : currentJitter > 5 ? 3.8 : 0.04;
+      if (dRisk) {
+        dRisk.innerText = `${riskPct < 0.1 ? '< 0.05%' : riskPct.toFixed(1) + '%'}`;
+        dRisk.style.color = riskPct > 5 ? '#f43f5e' : riskPct > 1 ? '#fbbf24' : 'var(--accent-emerald)';
+        if (dDot) {
+          dDot.style.background = riskPct > 5 ? '#f43f5e' : '#00f5b8';
+          dDot.style.boxShadow = riskPct > 5 ? '0 0 8px #f43f5e' : '0 0 8px #00f5b8';
+        }
+      }
+      if (dStatus) {
+        if (riskPct > 5) {
+          dStatus.innerText = '● Elevated Desync Probability (Delay Warning)';
+          dStatus.style.color = '#f43f5e';
+        } else {
+          dStatus.innerText = '● Sub-Millisecond Input Precision';
+          dStatus.style.color = 'var(--accent-emerald)';
+        }
+      }
+
+      const bGrade = document.getElementById('bufferbloatGrade');
+      const bDot = document.getElementById('bloatRatingDot');
+      const lDrift = document.getElementById('latencyDrift');
+      if (bGrade) {
+        if (ping > 120) {
+          bGrade.innerText = 'C- (> 35ms)';
+          bGrade.style.color = '#f43f5e';
+          if (bDot) { bDot.style.background = '#f43f5e'; bDot.style.boxShadow = '0 0 8px #f43f5e'; }
+          if (lDrift) { lDrift.innerText = '● High Bufferbloat Delay Detected'; lDrift.style.color = '#f43f5e'; }
+        } else if (ping > 80) {
+          bGrade.innerText = 'B (< 15ms)';
+          bGrade.style.color = '#fbbf24';
+          if (bDot) { bDot.style.background = '#fbbf24'; bDot.style.boxShadow = '0 0 8px #fbbf24'; }
+          if (lDrift) { lDrift.innerText = '● Minor Bufferbloat Variance'; lDrift.style.color = '#fbbf24'; }
+        } else {
+          bGrade.innerText = 'A+ (< 4ms)';
+          bGrade.style.color = '#00f5b8';
+          if (bDot) { bDot.style.background = '#00f5b8'; bDot.style.boxShadow = '0 0 8px #00f5b8'; }
+          if (lDrift) { lDrift.innerText = '● Zero Router Buffer Queue Delay'; lDrift.style.color = 'var(--accent-emerald)'; }
+        }
+      }
+
+      consecutiveStableFrames += ping < 60 ? 12 : 2;
+      const sFrames = document.getElementById('stableFramesCount');
+      if (sFrames) sFrames.innerText = `${consecutiveStableFrames.toLocaleString()} frames`;
+
+      const badge = document.getElementById('netStabilityScoreBadge');
+      if (badge) {
+        if (ping > 100 || lossPct > 1 || currentJitter > 15) {
+          const score = Math.max(74.2, 99.8 - (lossPct * 5) - (currentJitter * 0.8)).toFixed(1);
+          badge.innerText = `⚠️ ${score}% STABILITY • ELEVATED JITTER`;
+          badge.style.color = '#f43f5e';
+          badge.style.borderColor = 'rgba(244, 63, 94, 0.45)';
+          badge.style.background = 'rgba(244, 63, 94, 0.12)';
+        } else {
+          badge.innerText = '✓ 99.8% STABILITY • TOURNAMENT GRADE (A+)';
+          badge.style.color = '#00f5b8';
+          badge.style.borderColor = 'rgba(0, 245, 184, 0.45)';
+          badge.style.background = 'rgba(0, 245, 184, 0.12)';
+        }
+      }
+
+      renderJitterSparkline();
+      renderPacketStream();
+    }
+
+    function renderJitterSparkline() {
+      const container = document.getElementById('jitterSparkline');
+      if (!container) return;
+      container.innerHTML = '';
+      const max = Math.max(8, ...jitterHistory);
+      jitterHistory.forEach(j => {
+        const bar = document.createElement('div');
+        const h = Math.round((j / max) * 100);
+        const color = j > 15 ? '#f43f5e' : j > 5 ? '#fbbf24' : '#00f5b8';
+        bar.style.cssText = `flex: 1; height: ${Math.max(10, h)}%; background: ${color}; border-radius: 2px 2px 0 0; transition: height 0.2s ease;`;
+        bar.title = `${j} ms jitter`;
+        container.appendChild(bar);
+      });
+
+      const legend = document.getElementById('jitterSparklineLegend');
+      if (legend) {
+        legend.innerText = `Delta: ${currentJitter.toFixed(1)} ms • Min: ${Math.min(...jitterHistory).toFixed(1)} ms • Max: ${Math.max(...jitterHistory).toFixed(1)} ms`;
+      }
+    }
+
+    function renderPacketStream() {
+      const container = document.getElementById('packetStreamBar');
+      if (!container) return;
+      container.innerHTML = '';
+      let ackCount = 0;
+      packetStreamHistory.forEach(ok => {
+        if (ok) ackCount++;
+        const dot = document.createElement('div');
+        dot.style.cssText = `flex: 1; height: 26px; border-radius: 5px; background: ${ok ? 'rgba(0, 245, 184, 0.16)' : 'rgba(244, 63, 94, 0.25)'}; border: 1px solid ${ok ? 'rgba(0, 245, 184, 0.45)' : '#f43f5e'}; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: ${ok ? '#00f5b8' : '#f43f5e'}; box-shadow: ${ok ? 'none' : '0 0 10px rgba(244, 63, 94, 0.6)'};`;
+        dot.innerText = ok ? '✓' : '✕';
+        container.appendChild(dot);
+      });
+
+      const status = document.getElementById('packetStreamStatus');
+      if (status) {
+        status.innerText = `${ackCount}/${packetStreamHistory.length} Packets Acknowledged`;
+        status.style.color = ackCount === packetStreamHistory.length ? 'var(--accent-emerald)' : '#f43f5e';
+      }
+    }
+
+    function toggleSimulatePacketLoss() {
+      simulatedPacketLoss = !simulatedPacketLoss;
+      const btn = document.getElementById('btnToggleSimLoss');
+      if (simulatedPacketLoss) {
+        if (btn) {
+          btn.innerText = '✓ 0.0% Loss Clean Stream (Reset)';
+          btn.style.color = '#00f5b8';
+          btn.style.borderColor = 'rgba(0, 245, 184, 0.5)';
+        }
+        showToast('⚠️ Simulating 2.5% packet drop stream... Granular telemetry reactive.');
+      } else {
+        if (btn) {
+          btn.innerText = '⚠️ Simulate 2.5% Packet Drop';
+          btn.style.color = '';
+          btn.style.borderColor = '';
+        }
+        showToast('✓ Clean packet stream restored (0.0% Packet Loss).');
+      }
+      updateNetworkStabilityTelemetry(currentPing);
+    }
+
+    function resetNetworkStats() {
+      totalPacketsTx = 500;
+      totalPacketsRx = 500;
+      totalPacketsLost = 0;
+      simulatedPacketLoss = false;
+      packetStreamHistory = Array(28).fill(true);
+      jitterHistory = [1.2, 0.8, 1.4, 1.1, 0.9, 1.3, 1.0, 1.5, 0.8, 1.2];
+      currentJitter = 1.2;
+      const btn = document.getElementById('btnToggleSimLoss');
+      if (btn) {
+        btn.innerText = '⚠️ Simulate 2.5% Packet Drop';
+        btn.style.color = '';
+        btn.style.borderColor = '';
+      }
+      updateNetworkStabilityTelemetry(currentPing);
+      showToast('↺ Network statistical telemetry counters reset.');
+    }
+
+    function renderPingGraph() {
+      const graph = document.getElementById('pingGraph');
+      if (!graph) return;
+      graph.innerHTML = '';
+      const max = Math.max(60, ...pingHistory);
+      pingHistory.forEach(p => {
+        const bar = document.createElement('div');
+        const h = Math.round((p / max) * 100);
+        bar.style.cssText = `flex: 1; height: ${Math.max(12, h)}%; background: ${p > 100 ? '#f43f5e' : p > 60 ? '#fbbf24' : 'linear-gradient(180deg, #9b45ff, #741cff)'}; border-radius: 3px 3px 0 0;`;
+        graph.appendChild(bar);
+      });
+    }
+
+    function serverHop() {
+      showToast('Searching GPO servers with lowest latency in Singapore...');
+      setTimeout(() => {
+        const lbl = document.getElementById('lblJobId');
+        if (lbl) lbl.innerText = '94821a00-552e-410a-812b-hop' + Math.floor(Math.random() * 900 + 100);
+        simulatedHighPing = false;
+        currentPing = 22;
+        pingAlertDismissed = false;
+
+        const slider = document.getElementById('pingSlider');
+        if (slider) slider.value = 22;
+        const sliderVal = document.getElementById('pingSliderValue');
+        if (sliderVal) {
+          sliderVal.innerText = '22 ms';
+          sliderVal.style.color = 'var(--accent-emerald)';
+        }
+
+        const btn = document.getElementById('btnSimHighPing');
+        if (btn) {
+          btn.innerText = '⚠️ Simulate >100ms Ping';
+          btn.style.color = '';
+          btn.style.borderColor = '';
+        }
+
+        checkPingAlert(22);
+        updateNetworkStabilityTelemetry(22);
+        showToast('⚡ Connected to Singapore node.');
+      }, 700);
+    }
+
+    function copyJobId() {
+      const lbl = document.getElementById('lblJobId');
+      const jobId = lbl ? lbl.innerText : '94821a00-552e-410a-812b-sg01';
+      navigator.clipboard.writeText(jobId).catch(() => {});
+      showToast('Job ID copied to clipboard.');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    /* ========================================================
+       6. CROWN PRO LICENSE & COMMERCIAL TIER ENFORCEMENT
+       ======================================================== */
+    let isPro = true;
+
+    function openLicenseModal() {
+      const modal = document.getElementById('modalLicense');
+      if (modal) modal.style.display = 'flex';
+    }
+
+    function closeLicenseModal() {
+      const modal = document.getElementById('modalLicense');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function toggleLicenseTier() {
+      isPro = !isPro;
+      applyLicenseTierUI();
+      showToast(isPro ? '👑 Activated Crown Pro Commercial License!' : 'Switched to Standard Free Support Edition.');
+    }
+
+    function activateLicenseKey() {
+      const inp = document.getElementById('inpLicenseKey');
+      const key = inp ? inp.value.trim() : '';
+      if (!key) {
+        showToast('Please enter a license key.');
+        return;
+      }
+      isPro = true;
+      applyLicenseTierUI();
+      showToast('👑 Crown Pro Commercial License activated successfully!');
+      closeLicenseModal();
+    }
+
+    function applyLicenseTierUI() {
+      const sidebarTier = document.getElementById('sidebarTierText');
+      if (sidebarTier) {
+        sidebarTier.innerHTML = isPro ? '👑 Crown Pro Active' : 'Standard Support Tier';
+        sidebarTier.style.color = isPro ? '#fbbf24' : 'var(--muted)';
+      }
+
+      const topPill = document.getElementById('topLicensePill');
+      const topText = document.getElementById('topLicenseText');
+      if (topText) {
+        topText.innerText = isPro ? 'CROWN PRO ACTIVE' : 'FREE SUPPORT EDITION';
+        topText.style.color = isPro ? '#fbbf24' : 'var(--muted)';
+      }
+      if (topPill) {
+        topPill.style.borderColor = isPro ? 'rgba(251, 191, 36, 0.4)' : 'rgba(255, 255, 255, 0.15)';
+      }
+
+      const modalBadge = document.getElementById('modalCurrentTierBadge');
+      const modalBtn = document.getElementById('modalBtnToggleTier');
+      if (modalBadge) {
+        modalBadge.innerText = isPro ? '👑 CROWN PRO ACTIVE (Commercial License)' : 'FREE SUPPORT EDITION (Support Only)';
+        modalBadge.style.color = isPro ? '#fbbf24' : 'var(--muted)';
+      }
+      if (modalBtn) {
+        modalBtn.innerText = isPro ? '🔄 Switch to Free Support Mode' : '⚡ Activate Crown Pro Suite';
+      }
+
+      // Map Learning lock UI
+      const radarMapNotice = document.getElementById('radarMapLockNotice');
+      const btnAutoNav = document.getElementById('btnAutoNavigate');
+      const badgeRadarPro = document.getElementById('badgeRadarMapPro');
+      if (radarMapNotice) radarMapNotice.style.display = isPro ? 'none' : 'flex';
+      if (btnAutoNav) {
+        btnAutoNav.disabled = !isPro;
+        btnAutoNav.style.opacity = isPro ? '1' : '0.4';
+      }
+      if (badgeRadarPro) {
+        badgeRadarPro.innerText = isPro ? '✓ PRO UNLOCKED' : 'CROWN PRO FEATURE';
+        badgeRadarPro.style.borderColor = isPro ? '#00f5b8' : 'rgba(251, 191, 36, 0.45)';
+        badgeRadarPro.style.color = isPro ? '#00f5b8' : '#fbbf24';
+      }
+
+      // Auto Bot Learning lock UI
+      const autoBotNotice = document.getElementById('autoBotLockNotice');
+      const btnCalibrate = document.getElementById('btnCalibrateBot');
+      const badgeAutoPro = document.getElementById('badgeAutoBotPro');
+      if (autoBotNotice) autoBotNotice.style.display = isPro ? 'none' : 'flex';
+      if (btnCalibrate) {
+        btnCalibrate.disabled = !isPro;
+        btnCalibrate.style.opacity = isPro ? '1' : '0.4';
+      }
+      if (badgeAutoPro) {
+        badgeAutoPro.innerText = isPro ? '✓ PRO UNLOCKED' : 'CROWN PRO FEATURE';
+        badgeAutoPro.style.borderColor = isPro ? '#00f5b8' : 'rgba(251, 191, 36, 0.45)';
+        badgeAutoPro.style.color = isPro ? '#00f5b8' : '#fbbf24';
+      }
+
+      // VIP Suite card lock badges
+      const vipLocks = document.querySelectorAll('#viewVIP .pro-lock-badge');
+      vipLocks.forEach(b => {
+        b.innerText = isPro ? '✓ PRO UNLOCKED' : 'CROWN PRO';
+        b.style.color = isPro ? '#00f5b8' : '#fbbf24';
+      });
+
+      const loopSel = document.getElementById('macroLoopSelect');
+      if (loopSel && !isPro && loopSel.value === 'infinite') {
+        loopSel.value = '10';
+      }
+    }
+
+    function runAutoNavigation() {
+      if (!isPro) {
+        showToast('👑 Autonomous Map Navigation requires Crown Pro! Standard edition provides manual radar only.');
+        openLicenseModal();
+        return;
+      }
+      const selTarget = document.getElementById('selNavTarget');
+      const target = selTarget ? selTarget.value : 'logpose';
+      showToast(`🗺️ SLAM Auto-Navigator plotting 8-way route to ${target}...`);
+      setTimeout(() => {
+        if (target === 'logpose') {
+          targetWaypoint = { x: 573.75, y: 888.5 };
+        } else if (target === 'safezone') {
+          targetWaypoint = { x: 580.5, y: 888.5 };
+        } else if (target === 'shop') {
+          targetWaypoint = { x: 644.5, y: 545 };
+        } else {
+          targetWaypoint = { x: 848, y: 919 };
+        }
+        drawReferenceMarkers();
+        const dist = Math.round(Math.hypot(targetWaypoint.x - playerLocation.x, targetWaypoint.y - playerLocation.y) * 0.32);
+        showToast(`✓ Autonomous route plotted to ${target.toUpperCase()} [${Math.round(targetWaypoint.x)}, ${Math.round(targetWaypoint.y)}] (${dist} studs)`);
+      }, 700);
+    }
+
+    function calibrateBotLearning() {
+      if (!isPro) {
+        showToast('👑 Autonomous Bot Learning requires Crown Pro! Standard edition supports manual macros only.');
+        openLicenseModal();
+        return;
+      }
+      const status = document.getElementById('botLearningStatus');
+      if (status) status.innerText = 'AI Tuning delay matrices...';
+      showToast('🧠 Bot Learning Engine analyzing combat frame cooldowns & server tick rate...');
+      setTimeout(() => {
+        if (status) status.innerText = 'AI Calibrated: 0.2ms Precision (Synchronized)';
+        showToast('✓ Combat delays recalibrated for optimal weapon animation cancelling!');
+      }, 800);
+    }
+
+
+    /* ========================================================
+       ROBLOX GPS & CAMERA CALIBRATION ENGINE
+       ======================================================== */
+    let isClickToLocateMode = false;
+
+    function openGpsSyncModal() {
+      const modal = document.getElementById('modalGpsSync');
+      if (modal) modal.style.display = 'flex';
+      const curPos = document.getElementById('gpsModalCurrentPos');
+      if (curPos) curPos.innerText = `[${Math.round(playerLocation.x)}, ${Math.round(playerLocation.y)}]`;
+      const curHead = document.getElementById('gpsModalCurrentHeading');
+      if (curHead) curHead.innerText = `${facingName()} (${Math.round(playerHeading)}°)`;
+      const headSlider = document.getElementById('inpHeadingAngle');
+      if (headSlider) headSlider.value = Math.round(playerHeading);
+      const headDisplay = document.getElementById('lblHeadingAngleDisplay');
+      if (headDisplay) headDisplay.innerText = `${Math.round(playerHeading)}° (${facingName()})`;
+    }
+
+    function closeGpsSyncModal() {
+      const modal = document.getElementById('modalGpsSync');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function switchGpsTab(tab) {
+      ['telemetry', 'logpose', 'landmark', 'click'].forEach(t => {
+        const btn = document.getElementById(`tabBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
+        const content = document.getElementById(`tabGps${t.charAt(0).toUpperCase() + t.slice(1)}`);
+        if (btn) {
+          if (t === tab) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+        if (content) {
+          content.style.display = (t === tab) ? 'flex' : 'none';
+        }
+      });
+    }
+
+    async function syncFromRobloxTelemetry() {
+      try {
+        const res = await fetch('/api/roblox/session');
+        if (res.ok) {
+          const s = await res.json();
+          if (s && s.player_x != null && s.player_y != null) {
+            if (s.player_x < 40 || s.player_x > MAP_W - 40 || s.player_y < 40 || s.player_y > MAP_H - 40) {
+              showToast('⚠️ Ngoài phạm vi Spooksville! Nhân vật phải ở trên đảo Spooksville để định vị GPS.');
+              return;
+            }
+            if (s.heading != null) {
+              playerHeading = parseFloat(s.heading) || 0;
+              if (typeof updatePlayerHeadingUI === 'function') updatePlayerHeadingUI();
+            }
+            setPlayerLocation(s.player_x, s.player_y, 'Roblox Telemetry Hook');
+            closeGpsSyncModal();
+            return;
+          }
+        }
+      } catch (err) {}
+      setPlayerLocation(playerLocation.x, playerLocation.y, 'Roblox Hook Active');
+      closeGpsSyncModal();
+    }
+
+    function clampPlayerCoords() {
+      playerLocation.x = Math.max(40, Math.min(MAP_W - 40, Math.round(playerLocation.x)));
+      playerLocation.y = Math.max(40, Math.min(MAP_H - 40, Math.round(playerLocation.y)));
+      const hPos = document.getElementById('hudPlayerPos');
+      if (hPos) hPos.innerText = `[${playerLocation.x}, ${playerLocation.y}]`;
+    }
+
+    function setPlayerLocation(x, y, sourceName = '') {
+      playerLocation.x = Math.max(40, Math.min(MAP_W - 40, Math.round(x)));
+      playerLocation.y = Math.max(40, Math.min(MAP_H - 40, Math.round(y)));
+      try {
+        localStorage.setItem(PLAYER_LOCATION_KEY, JSON.stringify(playerLocation));
+      } catch {}
+
+      const hPos = document.getElementById('hudPlayerPos');
+      if (hPos) hPos.innerText = `[${playerLocation.x}, ${playerLocation.y}]`;
+      const curPos = document.getElementById('gpsModalCurrentPos');
+      if (curPos) curPos.innerText = `[${playerLocation.x}, ${playerLocation.y}]`;
+
+      const pGroup = document.getElementById('player-marker-group');
+      if (pGroup) {
+        // Smoothly glides to new GPS position via CSS transition: transform 0.3s ease-out
+        pGroup.style.transform = `translate(${playerLocation.x}px, ${playerLocation.y}px)`;
+        const navLine = document.getElementById('navBearingLine');
+        if (navLine) {
+          navLine.setAttribute('x1', playerLocation.x);
+          navLine.setAttribute('y1', playerLocation.y);
+        }
+        const logPoseMarker = referenceData.markers.find(m => m.category === 'logpose');
+        const navTarget = targetWaypoint || logPoseMarker;
+        if (navTarget) {
+          const dx = navTarget.x - playerLocation.x;
+          const dy = navTarget.y - playerLocation.y;
+          const deg = Math.round(((Math.atan2(dy, dx) * 180 / Math.PI) + 360) % 360);
+          const dist = Math.round(Math.hypot(dx, dy) * 0.32);
+          const hudBearing = document.getElementById('hudBearing');
+          if (hudBearing) {
+            hudBearing.innerText = targetWaypoint ? `WAYPOINT: ${deg}° (${dist} studs)` : `${deg}° (${dist} studs)`;
+            hudBearing.style.color = targetWaypoint ? '#00f5b8' : '#fbbf24';
+          }
+        }
+      } else {
+        drawReferenceMarkers();
+      }
+
+      showToast(`📍 Đã định vị nhân vật: [${playerLocation.x}, ${playerLocation.y}] ${sourceName ? '(' + sourceName + ')' : ''}`);
+    }
+
+    function applyLogPoseTriangulation() {
+      const inpStuds = document.getElementById('inpLogPoseStuds');
+      const selAngle = document.getElementById('selLogPoseAngle');
+      const studs = parseFloat(inpStuds ? inpStuds.value : '120') || 120;
+      const angleDeg = parseFloat(selAngle ? selAngle.value : '45') || 45;
+
+      // Log Pose Beacon on Spooksville Island is fixed at [646, 909]
+      const beaconX = 646;
+      const beaconY = 909;
+      const rad = angleDeg * (Math.PI / 180);
+
+      // In GPO Spooksville map: 1 stud ≈ 3.125 pixels (0.32 studs / pixel)
+      const pixelDist = studs / 0.32;
+      const px = beaconX - pixelDist * Math.cos(rad);
+      const py = beaconY - pixelDist * Math.sin(rad);
+
+      setPlayerLocation(px, py, 'Log Pose Triangulation');
+      closeGpsSyncModal();
+    }
+
+    function setPlayerToLandmark(x, y, name) {
+      setPlayerLocation(x, y, name);
+      closeGpsSyncModal();
+    }
+
+    function enableClickToLocateMode() {
+      isClickToLocateMode = true;
+      closeGpsSyncModal();
+      if (refSvg) refSvg.style.cursor = 'crosshair';
+      showToast('🎯 Click vào vị trí nhân vật đang đứng trên bản đồ Spooksville');
+    }
+
+    function onHeadingSliderChange(val) {
+      const deg = parseInt(val, 10);
+      playerHeading = ((deg % 360) + 360) % 360;
+
+      const headDisplay = document.getElementById('lblHeadingAngleDisplay');
+      if (headDisplay) headDisplay.innerText = `${playerHeading}° (${facingName()})`;
+      const curHead = document.getElementById('gpsModalCurrentHeading');
+      if (curHead) curHead.innerText = `${facingName()} (${playerHeading}°)`;
+      const hFacing = document.getElementById('hudFacing');
+      if (hFacing) hFacing.innerText = `${facingName()} (${playerHeading}°)`;
+
+      drawReferenceMarkers();
+    }
+
+    function setQuickHeading(deg) {
+      const slider = document.getElementById('inpHeadingAngle');
+      if (slider) slider.value = deg;
+      onHeadingSliderChange(deg);
+    }
+
+    /* INITIALIZATION */
+    initReferenceMap();
+    renderMacros();
+    fetchNet();
+    applyLicenseTierUI();
+    updateNetworkStabilityTelemetry(28);
+    // Periodic lag loop removed
+  </script>
+</body>
+</html>

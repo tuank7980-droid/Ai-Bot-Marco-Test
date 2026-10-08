@@ -1,0 +1,6 @@
+{
+  "name": "GPO Bot Macro & Vision Positioning AI Studio - Auto-Farm & AFK Assistant",
+  "description": "Macro bot assistant, computer vision landmark positioning, spatial learning, and AFK auto-farm automation suite for Roblox Grand Piece Online.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

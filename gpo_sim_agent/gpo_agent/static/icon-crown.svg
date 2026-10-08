@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="crownGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="35%" stop-color="#fbbf24"/>
+      <stop offset="70%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <filter id="crownGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  <!-- 3D Golden Crown with glowing highlights matching user image -->
+  <path d="M 8 50 L 3 18 L 19 32 L 32 10 L 45 32 L 61 18 L 56 50 Z" 
+        fill="url(#crownGrad)" stroke="#fef08a" stroke-width="2" stroke-linejoin="round" filter="url(#crownGlow)" />
+  <!-- Crown Center Inset Arch -->
+  <path d="M 16 50 Q 32 34 48 50 Z" fill="#0c101d" stroke="#f59e0b" stroke-width="1.5" />
+</svg>

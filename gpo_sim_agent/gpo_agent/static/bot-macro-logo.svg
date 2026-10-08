@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 200" width="620" height="200">
+  <defs>
+    <!-- Deep Electric Aura Glow -->
+    <filter id="neonOrbGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur1"/>
+      <feGaussianBlur stdDeviation="9" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="electricEdge" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComponentTransfer in="blur" result="glow">
+        <feFuncA type="linear" slope="2"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Celestial Core Gradient -->
+    <radialGradient id="celestialSphere" cx="45%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="25%" stop-color="#67e8f9"/>
+      <stop offset="55%" stop-color="#0284c7"/>
+      <stop offset="85%" stop-color="#0369a1"/>
+      <stop offset="100%" stop-color="#082f49"/>
+    </radialGradient>
+
+    <!-- Outer Nebula Smear Gradient -->
+    <radialGradient id="nebulaSmoke" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.25"/>
+      <stop offset="60%" stop-color="#7c3aed" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#02040c" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Font Strokes Gradient -->
+    <linearGradient id="textIce" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="45%" stop-color="#e0f2fe"/>
+      <stop offset="85%" stop-color="#7dd3fc"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+
+    <linearGradient id="blueNeonBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ambient Outer Glow -->
+  <rect x="0" y="0" width="620" height="200" fill="url(#nebulaSmoke)"/>
+
+  <!-- Backplate Dark Plate with Organic Cyber Lightning Contour matching Image #2 -->
+  <path d="
+    M 90,48
+    C 110,32 150,26 230,28
+    L 320,30
+    C 335,26 348,34 355,42
+    L 410,44
+    C 425,38 440,38 450,44
+    L 485,46
+    C 515,48 550,55 570,72
+    C 585,86 580,105 565,118
+    C 575,130 568,148 550,158
+    L 500,164
+    C 475,168 450,165 425,162
+    L 380,166
+    C 340,172 260,174 190,172
+    C 140,170 100,164 80,146
+    C 60,128 65,98 75,76
+    C 80,62 82,54 90,48 Z"
+    fill="#040612"
+    stroke="url(#blueNeonBorder)"
+    stroke-width="2.8"
+    filter="url(#electricEdge)"/>
+
+  <!-- Deep Blue Inner Nebula Highlights -->
+  <path d="M 85,75 Q 160,35 320,40 Q 480,45 550,85 Q 520,150 350,160 Q 150,165 85,120 Z"
+        fill="#081026" opacity="0.85"/>
+  <path d="M 110,65 Q 220,42 340,46 Q 260,120 120,135 Z"
+        fill="#1e1b4b" opacity="0.6"/>
+
+  <!-- Lightning Strands & Electric Energy Sparks -->
+  <path d="M 105,45 L 140,70 L 125,75 L 175,115" stroke="#38bdf8" stroke-width="1.2" fill="none" opacity="0.75" filter="url(#neonOrbGlow)"/>
+  <path d="M 290,60 L 315,55 L 305,68 L 335,62" stroke="#67e8f9" stroke-width="1.5" fill="none" opacity="0.8" filter="url(#neonOrbGlow)"/>
+  <path d="M 440,150 L 465,142 L 458,155 L 485,148" stroke="#818cf8" stroke-width="1.2" fill="none" opacity="0.7"/>
+
+  <!-- "BOT" Text with Brushed Lightning Cuts matching Image #2 -->
+  <g transform="translate(100, 24)" filter="url(#neonOrbGlow)">
+    <!-- Shadow / Glow Layer -->
+    <text x="28" y="76"
+          font-family="'Inter', 'Arial Black', sans-serif"
+          font-size="64"
+          font-weight="900"
+          font-style="italic"
+          letter-spacing="0.04em"
+          fill="#0284c7"
+          opacity="0.9"
+          stroke="#0284c7"
+          stroke-width="8"
+          stroke-linejoin="round">BOT</text>
+
+    <!-- Main Front Lightning Text -->
+    <text x="28" y="76"
+          font-family="'Inter', 'Arial Black', sans-serif"
+          font-size="64"
+          font-weight="900"
+          font-style="italic"
+          letter-spacing="0.04em"
+          fill="url(#textIce)"
+          stroke="#38bdf8"
+          stroke-width="2"
+          stroke-linejoin="round">BOT</text>
+  </g>
+
+  <!-- "MACRO" Text with Dynamic Brush Slits matching Image #2 -->
+  <g transform="translate(100, 32)" filter="url(#neonOrbGlow)">
+    <!-- Shadow / Glow Layer -->
+    <text x="12" y="132"
+          font-family="'Inter', 'Arial Black', sans-serif"
+          font-size="70"
+          font-weight="900"
+          font-style="italic"
+          letter-spacing="0.02em"
+          fill="#0284c7"
+          opacity="0.9"
+          stroke="#0284c7"
+          stroke-width="9"
+          stroke-linejoin="round">MACRO</text>
+
+    <!-- Main Front Lightning Text -->
+    <text x="12" y="132"
+          font-family="'Inter', 'Arial Black', sans-serif"
+          font-size="70"
+          font-weight="900"
+          font-style="italic"
+          letter-spacing="0.02em"
+          fill="url(#textIce)"
+          stroke="#38bdf8"
+          stroke-width="2.2"
+          stroke-linejoin="round">MACRO</text>
+  </g>
+
+  <!-- "AUTOMATE YOUR JOURNEY" High-Tech Subtitle with Lines -->
+  <g transform="translate(145, 172)">
+    <line x1="0" y1="-4" x2="32" y2="-4" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+    <text x="42" y="0"
+          font-family="'JetBrains Mono', 'Inter', monospace"
+          font-size="12.5"
+          font-weight="800"
+          letter-spacing="0.18em"
+          fill="#e0f2fe"
+          style="filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.8));">AUTOMATE YOUR JOURNEY</text>
+    <line x1="280" y1="-4" x2="312" y2="-4" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- Right Celestial Orb & High-Tech Rings matching Image #2 -->
+  <g transform="translate(470, 102)" filter="url(#neonOrbGlow)">
+    <!-- Outer Dashed Tracking Ring -->
+    <circle cx="0" cy="0" r="44" fill="none" stroke="rgba(56, 189, 248, 0.35)" stroke-width="1.8" stroke-dasharray="16 7"/>
+    <!-- Outer Solid Thin Rim -->
+    <circle cx="0" cy="0" r="39" fill="none" stroke="#0284c7" stroke-width="1.2" opacity="0.7"/>
+
+    <!-- Dark Orbital Base -->
+    <circle cx="0" cy="0" r="33" fill="#040817" stroke="#38bdf8" stroke-width="2.4"/>
+
+    <!-- Celestial Glowing Core Sphere -->
+    <circle cx="0" cy="0" r="28" fill="url(#celestialSphere)"/>
+
+    <!-- Inner Dragon / Phoenix Fire Swirl Aura inside Core -->
+    <path d="M -6 14 C -16 -4, 4 -22, 14 -10 C 18 2, 8 16, -2 18 C -14 12, -10 -2, -2 -6 Z"
+          fill="#ffffff" opacity="0.92" filter="url(#neonOrbGlow)"/>
+    <path d="M 2 -4 C 10 -8, 14 2, 8 8 Z" fill="#67e8f9"/>
+
+    <!-- Far-Right Satellite Gear Nodes -->
+    <g transform="translate(56, -22)">
+      <circle cx="0" cy="0" r="6.5" fill="#030712" stroke="#38bdf8" stroke-width="2"/>
+      <circle cx="0" cy="0" r="2.5" fill="#67e8f9"/>
+      <!-- Gear Teeth -->
+      <line x1="0" y1="-9" x2="0" y2="9" stroke="#38bdf8" stroke-width="1.5"/>
+      <line x1="-9" y1="0" x2="9" y2="0" stroke="#38bdf8" stroke-width="1.5"/>
+    </g>
+
+    <g transform="translate(56, 22)">
+      <circle cx="0" cy="0" r="6.5" fill="#030712" stroke="#38bdf8" stroke-width="2"/>
+      <circle cx="0" cy="0" r="2.5" fill="#67e8f9"/>
+      <!-- Gear Teeth -->
+      <line x1="0" y1="-9" x2="0" y2="9" stroke="#38bdf8" stroke-width="1.5"/>
+      <line x1="-9" y1="0" x2="9" y2="0" stroke="#38bdf8" stroke-width="1.5"/>
+    </g>
+  </g>
+</svg>

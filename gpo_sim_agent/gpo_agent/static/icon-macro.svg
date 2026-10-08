@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="macroGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="44" height="44" rx="10" fill="#0b1322" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+  <!-- Keycaps -->
+  <rect x="10" y="10" width="12" height="12" rx="3" fill="#1e293b" stroke="#475569" stroke-width="1.2"/>
+  <text x="16" y="19" fill="#f8fafc" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">Z</text>
+
+  <rect x="26" y="10" width="12" height="12" rx="3" fill="#1e293b" stroke="#475569" stroke-width="1.2"/>
+  <text x="32" y="19" fill="#f8fafc" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">X</text>
+
+  <rect x="10" y="26" width="12" height="12" rx="3" fill="#1e293b" stroke="#475569" stroke-width="1.2"/>
+  <text x="16" y="35" fill="#f8fafc" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">Q</text>
+
+  <!-- Lightning Bolt for instant macro trigger -->
+  <polygon points="32,24 28,33 33,33 30,42 38,31 33,31" fill="url(#macroGrad)"/>
+</svg>

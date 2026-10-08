@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="hpGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#be123c"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="44" height="44" rx="10" fill="#0b1322" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+  <!-- Heart Shield -->
+  <path d="M 24 37 C 24 37 12 28 12 18 C 12 13 16 9 21 11 C 23 12 24 14 24 14 C 24 14 25 12 27 11 C 32 9 36 13 36 18 C 36 28 24 37 24 37 Z" fill="url(#hpGrad)"/>
+  <!-- Pulse Line (ECG) -->
+  <path d="M 15 22 L 20 22 L 22 17 L 25 27 L 27 20 L 29 23 L 33 23" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
